@@ -1,19 +1,11 @@
-using API;
-using API.Data;
-using API.Repositories;
-using Microsoft.EntityFrameworkCore;
+using API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-//When Client and API are not from origin e.g localhost:5002 and localhost:5001
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
+//When Client and API are not from the same origin e.g localhost:5002 and localhost:5001
 builder.Services.AddCors();
 
 var app = builder.Build();
@@ -24,6 +16,8 @@ app.UseCors(x => x.AllowAnyHeader()
   .AllowAnyOrigin()
 
 );
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

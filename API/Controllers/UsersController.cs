@@ -1,13 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class UsersController : ControllerBase
+public class UsersController : BaseApiController
 {
     private readonly IUsersRepository usersRepository;
 
@@ -15,6 +13,7 @@ public class UsersController : ControllerBase
     {
         this.usersRepository = usersRepository;
     }
+
     [HttpGet]
     public async Task<IActionResult> GetUsers()
     {
@@ -25,11 +24,12 @@ public class UsersController : ControllerBase
         }
         return Ok(users);
     }
+    [Authorize]
     [HttpGet]
     [Route("{id:int}")]
     public async Task<IActionResult> GetUserById(int id)
     {
-        var user = await usersRepository.GetUserById(id);
+        var user = await usersRepository.GetUserByIdAsync(id);
         if (user == null) return NotFound($"No user found with Id {id}.");
         return Ok(user);
     }
