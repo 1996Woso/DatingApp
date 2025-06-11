@@ -30,7 +30,7 @@ public class AccountController : BaseApiController
     {
         if (await usersRepository.UserExistsAsync(registerDTO.Username))
         {
-            return BadRequest("User already exists.");
+            return BadRequest($"Username '{registerDTO.Username}' already exists.");
         }
         //var appUserDM = mapper.Map<AppUser>(registerDTO);
         var appUserDM = await accountRepository.RegisterAsync(registerDTO);

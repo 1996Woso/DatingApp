@@ -1,0 +1,53 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Dating App</a>
+    @if(accountService.currentUser()){
+    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+      <li class="nav-item">
+        <a class="nav-link">Matches</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">Matches</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">Messages</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" (click)="Logout()">Logout</a>
+      </li>
+    </ul>
+    } @if(accountService.currentUser()){
+    <div dropdown class="dropdown">
+      <a dropdownToggle class="dropdown-toggle text-light text-decoration-none">Wellcome {{ model.username }}</a>
+      <div *dropdownMenu class="dropdown-menu">
+        <a class="dropdown-item">Edit profile</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="Logout()">Logout</a>
+      </div>
+    </div>
+    } @if(!accountService.currentUser()){
+    <!-- *ngIf="!accountService.currentUser()"(put it inside the form) -->
+    <form
+      #lognForm="ngForm"
+      (ngSubmit)="Login()"
+      class="d-flex"
+      autocomplete="off"
+    >
+      <input
+        class="form-control me-2"
+        placeholder="Username"
+        name="username"
+        [(ngModel)]="model.username"
+      />
+      <input
+        class="form-control me-2"
+        placeholder="Password"
+        type="password"
+        name="password"
+        [(ngModel)]="model.password"
+      />
+      <button class="btn btn-outline-success" type="submit">Login</button>
+    </form>
+    }
+  </div>
+</nav>

@@ -13,17 +13,17 @@ public static class IdentityServiceExtensions
     )
     {
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-  .AddJwtBearer(options =>
-  {
-      var tokenKey = configuration["TokenKey"] ?? throw new Exception("TokenKey not found");
-      options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-      {
-          ValidateIssuerSigningKey = true,
-          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
-          ValidateAudience = false,
-          ValidateIssuer = false
-      };
-  });
+            .AddJwtBearer(options =>
+            {
+                var tokenKey = configuration["TokenKey"] ?? throw new Exception("TokenKey not found");
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey)),
+                    ValidateAudience = false,
+                    ValidateIssuer = false
+                };
+            });
         return services;
     }
 }

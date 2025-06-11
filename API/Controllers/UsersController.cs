@@ -13,7 +13,7 @@ public class UsersController : BaseApiController
     {
         this.usersRepository = usersRepository;
     }
-
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetUsers()
     {
