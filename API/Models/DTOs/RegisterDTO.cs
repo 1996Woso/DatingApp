@@ -7,8 +7,8 @@ public class RegisterDTO
 {
     [Required]
     [MaxLength(100)]
-    public required string Username { get; set; }
+    public string Username { get; set; } = "";
     [Required]
-    [MaxLength(100)]
-    public required string Password { get; set; }
+    [StringLength(100, MinimumLength = 4)]
+    public string Password { get; set; } = "";
 }

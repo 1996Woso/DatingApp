@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, input, Input, output, Output } from '@
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -25,21 +26,29 @@ export class RegisterComponent {
   /* ****************************************** */
   model: any = {};
   private toastr = inject(ToastrService);
+  private router = inject(Router);
+  isCancelled:boolean = false;
   Register(){
     this.accountService.Register(this.model).subscribe({
       next: (response) => {
+        this.router.navigateByUrl('/members');
         console.log(response);
-        this.Cancel();
+        // this.Cancel();
       },
       error: (error) =>{
-        this.toastr.error(error.error);
+        if(!this.isCancelled){
+          this.toastr.error(error.error);
+        }
         console.log(error);
+      },
+      complete: () => {
+        this.toastr.success('You\'ve successfully registered!')
       }
     });
   }
 
   Cancel(){
-
+    this.isCancelled = true;
     this.cancelRegister.emit(false);
     console.log('Cancelled!');
     

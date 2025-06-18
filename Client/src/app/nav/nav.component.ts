@@ -16,6 +16,7 @@ export class NavComponent {
   accountService = inject(AccountService);
   private router = inject(Router);
   private toastr = inject(ToastrService);
+
   Login() {
     this.accountService.Login(this.model).subscribe({
       next: (response) => {
@@ -26,11 +27,15 @@ export class NavComponent {
         this.toastr.error(error.error);
         console.log(error);
       },
+      complete: () => {
+        this.toastr.success('You\'ve successfully logged in!');
+      }
     });
   }
 
   Logout() {
     this.accountService.Logout();
     this.router.navigateByUrl('/');
+    this.toastr.success('You\'ve successfully logged out!');
   }
 }
