@@ -1,6 +1,6 @@
 using System;
 using API.Data;
-using API.Models;
+using API.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
