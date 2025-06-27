@@ -33,13 +33,6 @@ export class RegisterComponent {
       next: (response) => {
         this.router.navigateByUrl('/members');
         console.log(response);
-        // this.Cancel();
-      },
-      error: (error) =>{
-        if(!this.isCancelled){
-          this.toastr.error(error.error);
-        }
-        console.log(error);
       },
       complete: () => {
         this.toastr.success('You\'ve successfully registered!')

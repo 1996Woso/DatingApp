@@ -1,4 +1,4 @@
-<form #registerForm="ngForm" (submit)="Register()" autocomplete="off">
+<form #registerForm="ngForm" autocomplete="off">
   <h2 class="text-center text-primary">Sign up</h2>
   <hr />
   <div class="mb-3 form-floating">
@@ -22,12 +22,14 @@
     <label>Password</label>
   </div>
   <div class="form-group text-center">
-    <button class="btn btn-success me-2" type="submit">Register</button>
+    <button class="btn btn-success me-2" type="submit" (click)="Register()">
+      Register
+    </button>
     <button class="btn btn-danger me-2" type="submit" (click)="Cancel()">
       Cancel
     </button>
   </div>
-   <!-- <div class="mb-3">
+  <!-- <div class="mb-3">
       <label>Who is your favorite user?</label>
       <select class="form-select">
         @for(user of usersFromHomeComp(); track $index){

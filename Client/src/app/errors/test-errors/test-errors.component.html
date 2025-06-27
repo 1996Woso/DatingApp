@@ -7,7 +7,7 @@
 
     @if(validationErros.length > 0){
         <div class="row mt-5">
-            <ul class="text-danger">
+            <ul class="text-danger" style="list-style-type: square;">
                 @for(error of validationErros; track $index){
                     <li>{{error}}</li>
                 }
