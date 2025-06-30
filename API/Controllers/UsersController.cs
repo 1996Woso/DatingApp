@@ -1,4 +1,5 @@
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Models;
 using API.Models.DTOs;
@@ -13,14 +14,14 @@ namespace API.Controllers;
 public class UsersController : BaseApiController
 {
     private readonly IUsersRepository usersRepository;
-
+    private readonly IMapper mapper;
 
     public UsersController(IUsersRepository usersRepository
-
+        , IMapper mapper
     )
     {
         this.usersRepository = usersRepository;
-     
+        this.mapper = mapper;
     }
     // [AllowAnonymous]
     [HttpGet]
@@ -45,5 +46,18 @@ public class UsersController : BaseApiController
         var user = await usersRepository.GetUserDtoByUsernameAsync(username);
         if (user == null) return NotFound($"'{username}' is not found.");
         return Ok(user);
+    }
+    [HttpPut]
+    public async Task<IActionResult> UpdateUser(UpdateAppUserDTO updateAppUserDTO)
+    {
+        var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (username == null) return BadRequest("No username found in token");
+
+        var user = await usersRepository.GetUserByUsernameAsync(username);
+        if (user == null) return BadRequest("User is not found");
+        mapper.Map(updateAppUserDTO, user);
+
+        if (await usersRepository.SaveAllAsync()) return NoContent();
+        return BadRequest("Faild to update the user.");
     }
 }

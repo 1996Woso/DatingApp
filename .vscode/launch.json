@@ -5,6 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         
+        
         {
             "name": "Containers: .NET Container SDK Launch",
             "type": "docker",
