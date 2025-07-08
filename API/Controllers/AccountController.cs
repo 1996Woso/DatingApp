@@ -1,4 +1,4 @@
-using API.Models;
+using API.Interfaces;
 using API.Models.DTOs;
 using API.Repositories.Account;
 using API.Services;
@@ -50,6 +50,7 @@ public class AccountController : BaseApiController
             return Unauthorized("Invalid password.");
         }
         var appUserDM = await accountRepository.LoginAsync(loginDTO);
+        
         var appUserDTO = mapper.Map<AppUserDTO>(appUserDM);
         appUserDTO.Token = await tokenService.CreateTokenAsync(appUserDM);
         return Ok(appUserDTO);

@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using API.Models.Domain;
 using API.Models.DTOs;
 
-namespace API.Repositories.Account;
+namespace API.Interfaces;
 
 public interface IAccountRepository
 {

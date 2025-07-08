@@ -27,7 +27,7 @@ export class MemberDetailComponent implements OnInit{
     if (!username) return;
     this.memberService.getMemberByUsername(username).subscribe({
       next: member => {
-        this.member = member
+        this.member = member;
         member.photos.map(p => {
           this.images.push(new ImageItem({src: p.url, thumb: p.url}))
         })

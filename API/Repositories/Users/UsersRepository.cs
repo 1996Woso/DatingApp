@@ -5,6 +5,7 @@ using API.Models.DTOs;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
+using API.Interfaces;
 
 namespace API.Repositories;
 

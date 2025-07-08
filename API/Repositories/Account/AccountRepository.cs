@@ -5,6 +5,7 @@ using API.Data;
 using API.Models.Domain;
 using API.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
+using API.Interfaces;
 
 namespace API.Repositories.Account;
 

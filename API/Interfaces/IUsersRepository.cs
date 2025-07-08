@@ -2,7 +2,7 @@ using System;
 using API.Models.Domain;
 using API.Models.DTOs;
 
-namespace API;
+namespace API.Interfaces;
 
 public interface IUsersRepository
 {

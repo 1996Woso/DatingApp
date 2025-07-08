@@ -1,7 +1,7 @@
 using System;
 using API.Models.Domain;
 
-namespace API.Services;
+namespace API.Interfaces;
 
 public interface ITokenService
 {

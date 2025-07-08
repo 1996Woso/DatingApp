@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text;
 using API.Models.Domain;
 using Microsoft.IdentityModel.Tokens;
+using API.Interfaces;
 
 namespace API.Services;
 
