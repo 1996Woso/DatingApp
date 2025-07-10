@@ -1,28 +1,103 @@
-<form #registerForm="ngForm" autocomplete="off">
+<form [formGroup]="registerForm" autocomplete="off">
   <h2 class="text-center text-primary">Sign up</h2>
   <hr />
-  <div class="mb-3 form-floating">
-    <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="model.username"
-      placeholder="Username"
-      name="username"
-    />
-    <label>Username</label>
+
+  <div class="mb-3 text-start">
+    <label style="margin-right: 2rem"><b>Gender:</b></label>
+    <label class="form-check-label me-6">
+      <input
+        type="radio"
+        class="form-check-input"
+        value="male"
+        formControlName="gender"
+      />
+      Male
+    </label>
+    &nbsp;&nbsp;
+    <label class="form-check-label">
+      <input
+        type="radio"
+        class="form-check-input"
+        value="female"
+        formControlName="gender"
+      />
+      Female
+    </label>
   </div>
-  <div class="mb-3 form-floating">
+  <app-text-input
+    [formControl]="$any(registerForm.controls['username'])"
+    [label]="'Username'"
+  />
+    <app-text-input
+    [formControl]="$any(registerForm.controls['knownAs'])"
+    [label]="'Known As'"
+  />
+    <app-date-picker
+    [formControl]="$any(registerForm.controls['dateOfBirth'])"
+    [label]="'Date Of Birth'"
+    [maxDate]="maxDate"
+  />
+    <app-text-input
+    [formControl]="$any(registerForm.controls['city'])"
+    [label]="'City'"
+  />
+    <app-text-input
+    [formControl]="$any(registerForm.controls['country'])"
+    [label]="'Country'"
+  />
+  <app-text-input
+    [formControl]="$any(registerForm.controls['password'])"
+    [type]="'password'"
+    [label]="'Password'"
+  />
+
+  <app-text-input
+    [formControl]="$any(registerForm.controls['confirmPassword'])"
+    [type]="'password'"
+    [label]="'Confirm Password'"
+  />
+
+  @if (validationErrors) {
+    <div class="alert alert-danger text-start">
+      <ul>
+        @for (error of validationErrors; track $index) {
+          <li>{{error}}</li>
+        }
+      </ul>
+    </div>
+  }
+  <!-- <div class="mb-3 form-floating">
     <input
+      [class.is-invalid]="
+        registerForm.get('confirmPassword')?.errors &&
+        registerForm.get('confirmPassword')?.touched
+      "
       type="password"
       class="form-control"
-      [(ngModel)]="model.password"
-      placeholder="Password"
-      name="password"
+      formControlName="confirmPassword"
+      placeholder="Confirm Password"
     />
-    <label>Password</label>
-  </div>
+    <label>Confirm Password</label>
+    <div
+      *ngIf="registerForm.get('confirmPassword')?.hasError('required')"
+      class="invalid-feedback text-start"
+    >
+      Confirm password is required.
+    </div>
+      <div
+      *ngIf="registerForm.get('confirmPassword')?.hasError('isMatching')"
+      class="invalid-feedback text-start"
+    >
+      Confirm password must match password.
+    </div>
+  </div> -->
   <div class="form-group text-center">
-    <button class="btn btn-success me-2" type="submit" (click)="Register()">
+    <button 
+      class="btn btn-success me-2" 
+      type="submit" 
+      (click)="Register()"
+      [disabled]="!registerForm.valid"
+      >
       Register
     </button>
     <button class="btn btn-danger me-2" type="submit" (click)="Cancel()">
@@ -38,3 +113,6 @@
       </select>
     </div> -->
 </form>
+
+<!-- <p>Form value: {{ registerForm.value | json }}</p>
+<p>Form status: {{ registerForm.status | json }}</p> -->
