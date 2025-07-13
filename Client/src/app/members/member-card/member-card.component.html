@@ -14,11 +14,21 @@
     </ul>
   </div>
   <div class="card-body p-1">
-    <h6 class="card-title text-center mb-1">
-        <i class="fa fa-user me-2"></i>
-    </h6>
+    <p class="card-title text-center mb-1">
+        <b>
+          @if (member().gender.toLowerCase() === 'female') {
+            <i class="bi bi-person-standing-dress fs-5"></i>
+             {{member().knownAs}}, {{member().age}} Yrs
+          }@else {
+            <i class="bi bi-person-standing fs-5"></i>
+             {{member().knownAs}}, {{member().age}} Yrs
+          }
+       
+        </b>
+    </p>
     <p class="card-text text-muted text-center">
-        {{member().city}}
+      <i class="bi bi-geo-alt-fill"></i>
+        {{member().city}},{{member().country}}
     </p>
   </div>
 </div>

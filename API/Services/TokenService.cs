@@ -18,13 +18,15 @@ public class TokenService : ITokenService
     }
     public async Task<string> CreateTokenAsync(AppUser appUser)
     {
+        await Task.Delay(0);
         var tokenKey = configuration["TokenKey"] ?? throw new Exception("Cannot access token key from appsettings.");
         if (tokenKey.Length < 64) throw new Exception("Your tokenKey must be atleast 64 characters long");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
         
         var claims = new List<Claim>
         {
-            new(ClaimTypes.NameIdentifier, appUser.UserName)
+            new(ClaimTypes.NameIdentifier, appUser.Id.ToString()),
+            new(ClaimTypes.Name, appUser.UserName)
         };
         
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);

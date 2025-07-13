@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Extensions;
 using API.Interfaces;
+using API.Models;
 using API.Models.Domain;
 using API.Models.DTOs;
 using AutoMapper;
@@ -30,10 +31,13 @@ public class UsersController : BaseApiController
     }
     // [AllowAnonymous]
     [HttpGet]
-    public async Task<IActionResult> GetUsers()
+    public async Task<IActionResult> GetUsers([FromQuery] UserParams userParams)
     {
-        var users = await usersRepository.GetUsersDtoAsync();
+        userParams.CurrentUsername = User.GetUsername();
+        var users = await usersRepository.GetUsersDtoAsync(userParams);
         if (!users!.Any()) return NotFound("Users not found.");
+
+        Response.AddPaginationHeader(users);
         return Ok(users);
     }
     [HttpGet]

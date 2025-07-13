@@ -44,3 +44,33 @@
   border-top: 1px solid #eee;
   padding: 15px 0;
 }
+
+/* Hover buttons */
+.icon-with-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.icon-with-tooltip .tooltip-text {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 5px 8px;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 1;
+  bottom: -150%; /* Position below icon */
+  left: 100%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.icon-with-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}

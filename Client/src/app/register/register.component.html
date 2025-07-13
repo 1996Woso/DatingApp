@@ -10,8 +10,8 @@
         class="form-check-input"
         value="male"
         formControlName="gender"
-      />
-      Male
+      />&nbsp;
+      <i class="bi bi-gender-male"></i> Male
     </label>
     &nbsp;&nbsp;
     <label class="form-check-label">
@@ -20,8 +20,8 @@
         class="form-check-input"
         value="female"
         formControlName="gender"
-      />
-      Female
+      />&nbsp;
+      <i class="bi bi-gender-female"></i> Female
     </label>
   </div>
   <app-text-input
@@ -98,10 +98,10 @@
       (click)="Register()"
       [disabled]="!registerForm.valid"
       >
-      Register
+      <i class="bi bi-hand-index-fill"></i> Register
     </button>
     <button class="btn btn-danger me-2" type="submit" (click)="Cancel()">
-      Cancel
+      <i class="bi bi-x-circle"></i> Cancel
     </button>
   </div>
   <!-- <div class="mb-3">

@@ -10,3 +10,13 @@ img {
     
 
 }
+a {
+  border-radius: 1rem;
+  transition: background-color 0.3s ease;
+}
+a:hover {
+    background-color: rgb(120, 108, 143);
+    color: white;
+    transform: scale(1.02);
+    transition: 0.5s ease-in-out;
+}

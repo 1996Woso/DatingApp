@@ -33,3 +33,9 @@
 .animate {
     transition: all 0.3s ease-in-out;
 }
+p {
+    font-size: small;
+}
+button {
+    border-radius: 50%;
+}
