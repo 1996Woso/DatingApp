@@ -15,16 +15,17 @@ import { ToastrService } from 'ngx-toastr';
 import { PhotoEditorComponent } from "../photo-editor/photo-editor.component";
 import { DatePipe } from '@angular/common';
 import { TimeagoModule } from 'ngx-timeago';
+import { MemberCardComponent } from "../member-card/member-card.component";
 
 @Component({
   selector: 'app-member-edit',
-  imports: [TabsModule, FormsModule, PhotoEditorComponent, DatePipe, TimeagoModule],
+  imports: [TabsModule, FormsModule, PhotoEditorComponent, DatePipe, TimeagoModule, MemberCardComponent],
   templateUrl: './member-edit.component.html',
   styleUrl: './member-edit.component.css',
 })
 export class MemberEditComponent implements OnInit {
   member?: Member;
-  private accountService = inject(AccountService);
+  accountService = inject(AccountService);
   private memberService = inject(MembersService);
   private toastr = inject(ToastrService);
   //@ViewChild('editForm') editForm?: NgForm;

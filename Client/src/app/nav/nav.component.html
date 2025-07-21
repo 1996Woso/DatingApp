@@ -1,86 +1,96 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+<nav class="navbar navbar-expand-md navbar-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/" routerLinkActive="active">
+    <a class="navbar-brand home-hover" routerLink="/" routerLinkActive="active">
       <i class="bi bi-house"></i>
     </a>
-    <ul class="navbar-nav me-auto mb-2 mb-md-0">
-      @if(accountService.currentUser()){
-      <li class="nav-item">
-        <a routerLink="/members" routerLinkActive="active" class="nav-link">
-          <i class="bi bi-people-fill"></i> Matches
-        </a>
-      </li>
-      &nbsp;&nbsp;&nbsp;
-      <li class="nav-item">
-        <a routerLink="/lists" routerLinkActive="active" class="nav-link">
-          <i class="bi bi-list"></i> Lists
-        </a>
-      </li>
-      &nbsp;&nbsp;&nbsp;
-      <li class="nav-item">
-        <a routerLink="/messages" routerLinkActive="active" class="nav-link">
-          <i class="bi bi-chat-dots-fill"></i> Messages
-        </a>
-      </li>
-      &nbsp;&nbsp;&nbsp;
-      <li class="nav-item">
-        <a class="nav-link" (click)="Logout()">
-          <i class="bi bi-escape"></i> Logout
-        </a>
-      </li>
-      &nbsp;&nbsp;&nbsp; }
-      <li class="nav-item">
-        <a routerLink="/errors" routerLinkActive="active" class="nav-link"
-          >Errors</a
+    <!--Angular controlled hamburge button-->
+    <button class="navbar-toggler" 
+        type="button" 
+        (click)="toggleMenu()"
         >
-      </li>
-    </ul>
-    @if(accountService.currentUser()){
-    <div dropdown class="dropdown">
-      <img
-        class="me-2"
-        src="{{ accountService.currentUser()?.photoUrl || 'assets/user.png' }}"
-        alt="{{ accountService.currentUser()?.username + '`s main image' }}"
-      />
-      <button dropdownToggle class="btn dropdown-toggle text-light text-decoration-none"
-        >Hello, {{ model.username | titlecase }}</button
-      >
-      <div *dropdownMenu class="dropdown-menu">
-        <a routerLink="/member/edit" class="dropdown-item">
-          <i class="bi bi-pencil-square"></i> Edit Profile
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" (click)="Logout()">
-          <i class="bi bi-escape"></i> Logout
-        </a>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!--Collapsible content with Angular ngClass-->
+    <div class="navbar-collapse" [ngClass]="{ collapse: isMenuCollapsed }">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0 gap-md-2 gap-lg-6 gap-xl-6">
+        @if(accountService.currentUser()){
+        <li class="nav-item">
+          <a routerLink="/members" routerLinkActive="active" class="nav-link">
+            <i class="bi bi-people-fill"></i> Matches
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/lists" routerLinkActive="active" class="nav-link">
+            <i class="bi bi-list"></i> Lists
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/messages" routerLinkActive="active" class="nav-link">
+            <i class="bi bi-chat-dots-fill"></i> Messages
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="Logout()">
+            <i class="bi bi-escape"></i> Logout
+          </a>
+        </li> }
+        <li class="nav-item">
+          <a routerLink="/errors" routerLinkActive="active" class="nav-link"
+            >Errors</a
+          >
+        </li>
+      </ul>
+      @if(accountService.currentUser()){
+      <div dropdown class="dropdown">
+        <img
+          class="me-2 rounded-circle"
+          src="{{accountService.currentUser()?.photoUrl || accountService.defaultImage}}"
+          alt="{{ accountService.currentUser()?.username + '`s main image' }}"
+        />
+        <button
+          dropdownToggle
+          class="btn dropdown-toggle text-light text-decoration-none"
+        >
+          Hello, {{ accountService.currentUser()?.knownAs| titlecase }}
+        </button>
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+          <a routerLink="/member/edit" class="dropdown-item text-dark">
+            <i class="bi bi-pencil-square"></i> Edit Profile
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-dark" (click)="Logout()">
+            <i class="bi bi-escape"></i> Logout
+          </a>
+        </div>
       </div>
+      } @if(!accountService.currentUser()){
+      <!-- *ngIf="!accountService.currentUser()"(put it inside the form) -->
+      <form
+        #lognForm="ngForm"
+        (ngSubmit)="Login()"
+        class="d-flex gap-2"
+        autocomplete="off"
+      >
+        <input
+          class="form-control me-2"
+          placeholder="Username"
+          name="username"
+          [(ngModel)]="model.username"
+        />
+        <input
+          class="form-control me-2"
+          placeholder="Password"
+          type="password"
+          name="password"
+          [(ngModel)]="model.password"
+        />
+        <button class="btn btn-success text-start" type="submit">
+          <!-- <i class="bi bi-person-fill-up"></i>  -->
+          Login
+        </button>
+      </form>
+      }
     </div>
-    } @if(!accountService.currentUser()){
-    <!-- *ngIf="!accountService.currentUser()"(put it inside the form) -->
-    <form
-      #lognForm="ngForm"
-      (ngSubmit)="Login()"
-      class="d-flex"
-      autocomplete="off"
-    >
-      <input
-        class="form-control me-2"
-        placeholder="Username"
-        name="username"
-        [(ngModel)]="model.username"
-      />
-      <input
-        class="form-control me-2"
-        placeholder="Password"
-        type="password"
-        name="password"
-        [(ngModel)]="model.password"
-      />
-      <button class="btn btn-success text-start" type="submit">
-        <!-- <i class="bi bi-person-fill-up"></i>  -->
-         Login
-      </button>
-    </form>
-    }
   </div>
 </nav>

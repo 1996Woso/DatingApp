@@ -1,4 +1,3 @@
-import { NgFor } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { NavComponent } from './nav/nav.component';
 import { AccountService } from './_services/account.service';
@@ -7,7 +6,7 @@ import { NgxSpinnerComponent } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
-  imports: [NgFor, NavComponent, RouterOutlet,NgxSpinnerComponent],
+  imports: [NavComponent, RouterOutlet,NgxSpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -22,6 +21,7 @@ export class AppComponent implements OnInit {
     const userString = localStorage.getItem('user');
     if (!userString) return;
     const user = JSON.parse(userString);
-    this.accountService.currentUser.set(user);
+    //this.accountService.currentUser.set(user);
+    this.accountService.setCurrentUser(user);//to get like ids
   }
 }

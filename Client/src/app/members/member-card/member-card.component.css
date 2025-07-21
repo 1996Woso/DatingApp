@@ -38,4 +38,12 @@ p {
 }
 button {
     border-radius: 50%;
+    background-color: rgb(239, 233, 239);
+    border-color:  rgb(34, 147, 159);
+}
+button:hover {
+    background-color: rgb(239, 233, 239);
+    border-color:  rgb(34, 147, 159);
+    transform: scale(1.09);
+    transition: 0.5s ease-in-out;
 }

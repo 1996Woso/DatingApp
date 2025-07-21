@@ -1,40 +1,44 @@
 @if (member) {
-<div class="row">
-  <div class="col-md-4">
-    <div class="card">
-      <img
-        src="{{ member.photoUrl || './assets/user.png' }}"
-        alt="{{ member.knownAs }}"
-        class="card-img img-thumbnail"
-      />
-    </div>
-    <div class="card-body">
-      <div>
-        <b>Location:</b>
-        <p>{{ member.city }}, {{ member.city }}</p>
-      </div>
-      <div>
-        <b>Age:</b>
-        <p>{{ member.age }}</p>
-      </div>
-      <div>
-        <b>Last Active</b>
-        <p>{{ member.lastActive | timeago}}</p>
-      </div>
-      <div>
-        <b>Member since:</b>
-        <p>{{ member.createdAt | date: 'dd MMMM yyyy' }}</p>
-      </div>
-    </div>
-    <div class="card-footer">
-      <div class="btn-group d-flex">
-        <button class="btn btn-primary">Like</button>
-        <button class="btn btn-success">Message</button>
-      </div>
+<div class="container-fluid">
+  <!--Header row-->
+  <div class="row">
+    <div class="col-12">
+      <h3 class="text-center">{{ member.knownAs }}'s profile</h3>
+      <hr />
     </div>
   </div>
-  <div class="col-md-8">
-    <tabset class="member-tabset">
+
+  <!--Main content-->
+  <div class="row g-4">
+    <div class="col-12 col-lg-4 order-1 order-lg-1">
+      <div class="card">
+        <!--Profile info-->
+        <div class="card-body">
+          <div class="row g-1">
+            <div class="col-6 mt-2">
+              <app-member-card [member]="member" />
+            </div>
+            <div class="col-6 mt-2">
+              <div class="text-start">
+                <p><span><b>Last Active</b></span>: {{ member.lastActive | timeago }}</p>
+                <p><span><b>Member since </b></span>: {{ member.createdAt | date : "dd MMMM yyyy" }}</p>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="btn-group w-100 py-1">
+                <button class="btn btn-primary"><i class="bi bi-hand-thumbs-up-fill"></i> Like</button>
+                <button class="btn btn-success"><i class="bi bi-envelope-fill"></i> Message</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="col-12 col-lg-8 order-2 order-lg-2">
+      <div class="card">
+        <div class="card-body">
+            <tabset class="member-tabset">
       <tab heading="About {{ member.knownAs }}">
         <h4>Description</h4>
         <p>{{ member.introduction }}</p>
@@ -47,13 +51,12 @@
       </tab>
       <tab heading="Photos" #photoTab="tab">
         @if (photoTab.active) {
-        <gallery 
-          [items]="images" 
-          class="gallery" 
+        <gallery
+          [items]="images"
+          class="gallery"
           counter="true"
           itemAutosize="false"
-          > 
-
+        >
         </gallery>
         }
       </tab>
@@ -61,6 +64,9 @@
         <p>Messages will go here</p>
       </tab>
     </tabset>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 }

@@ -1,0 +1,5 @@
+.container-fluid {
+    background-color: rgba(204, 189, 204, 0.85);
+    border-radius: 1rem;
+    box-shadow: 0 0 8px rgb(47, 47, 140);
+}
