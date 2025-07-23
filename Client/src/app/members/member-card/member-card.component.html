@@ -22,7 +22,12 @@
         </button>
       </li>
       <li class="list-inline-item">
-        <button class="btn btn"><i class="bi bi-envelope-fill"></i></button>
+        <button class="btn btn"
+          routerLink="/members/{{member().username}}"
+          [queryParams]="{tab: 'Messages'}"
+        >
+          <i class="bi bi-envelope-fill"></i>
+        </button>
       </li>
     </ul>
     }

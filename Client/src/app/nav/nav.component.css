@@ -16,8 +16,8 @@ a {
 }
 
 a:hover ,.dark-text:hover {
-  background-color: rgb(82, 18, 199);
-  color: rgb(191, 218, 223) !important;
+  background-color: rgba(6, 1, 15,0.4);
+  color: rgb(243, 247, 248) !important;
   transform: scale(1.02);
   transition: 0.5s ease-in-out;
 }

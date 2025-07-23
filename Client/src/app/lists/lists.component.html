@@ -1,41 +1,49 @@
-<div class="text-center mt-3">
-    <h3>{{getTitle()}}</h3>
-</div>
-
-<div class="container mt-3">
-    <div class="d-flex">
-        <div class="btn-group">
-            <button class="btn btn-primary" 
-                btnRadio="liked"
-                [(ngModel)]="predicate"
-                (click)="loadLikes()"
-            >Members I like
-            </button>
-             <button class="btn btn-primary" 
-                btnRadio="likedBy"
-                [(ngModel)]="predicate"
-                (click)="loadLikes()"
-            >Members who like me
-            </button>
-             <button class="btn btn-primary" 
-                btnRadio="mutual"
-                [(ngModel)]="predicate"
-                (click)="loadLikes()"
-            >Mutual members
-            </button>
-        </div>
+<div class="container-fluid mb-0">
+  <div class="row">
+    <div class="col-12 text-start mt-2">
+      <h4>{{ getTitle() }}</h4>
     </div>
-
-    <div class="row mt-3">
-        @for (member of likesService.paginatedResult()?.items; track member.id) {
-            <div class="col-2">
-                <app-member-card [member]="member" [showButtons]="true" />
-            </div>
-        }
+  </div>
+  <!--Buttons-->
+  <div class="row mt-3">
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="btn-group">
+        <button
+          class="btn btn-primary"
+          btnRadio="liked"
+          [(ngModel)]="predicate"
+          (click)="loadLikes()"
+        >
+          Members I like
+        </button>
+        <button
+          class="btn btn-primary"
+          btnRadio="likedBy"
+          [(ngModel)]="predicate"
+          (click)="loadLikes()"
+        >
+          Members who like me
+        </button>
+        <button
+          class="btn btn-primary"
+          btnRadio="mutual"
+          [(ngModel)]="predicate"
+          (click)="loadLikes()"
+        >
+          Mutual members
+        </button>
+      </div>
     </div>
-</div>
+  </div>
+  <div class="row g-3 mt-3">
+    @for (member of likesService.paginatedResult()?.items; track member.id) {
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+      <app-member-card [member]="member" [showButtons]="true" />
+    </div>
+    }
+  </div>
 
-<!--Pagination-->
+  <!--Pagination-->
   @if (likesService.paginatedResult()?.pagination) {
   <div class="row mt-4">
     <div class="col-12 d-flex justify-content-center">
@@ -57,3 +65,4 @@
     </div>
   </div>
   }
+</div>

@@ -1,4 +1,4 @@
-@if (member) {
+
 <div class="container-fluid">
   <!--Header row-->
   <div class="row">
@@ -20,14 +20,26 @@
             </div>
             <div class="col-6 mt-2">
               <div class="text-start">
-                <p><span><b>Last Active</b></span>: {{ member.lastActive | timeago }}</p>
-                <p><span><b>Member since </b></span>: {{ member.createdAt | date : "dd MMMM yyyy" }}</p>
+                <p>
+                  <span><b>Last Active</b></span
+                  >: {{ member.lastActive | timeago }}
+                </p>
+                <p>
+                  <span><b>Member since </b></span>:
+                  {{ member.createdAt | date : "dd MMMM yyyy" }}
+                </p>
               </div>
             </div>
             <div class="col-12">
               <div class="btn-group w-100 py-1">
-                <button class="btn btn-primary"><i class="bi bi-hand-thumbs-up-fill"></i> Like</button>
-                <button class="btn btn-success"><i class="bi bi-envelope-fill"></i> Message</button>
+                <button class="btn btn-primary">
+                  @if(hasLiked()) {
+                  <i class="bi bi-heart-fill text-danger"></i> Unlike }@else{
+                  <i class="bi bi-heart-fill"></i> Like }
+                </button>
+                <button class="btn btn-success" (click)="selectTab('Messages')">
+                  <i class="bi bi-envelope-fill"></i> Message
+                </button>
               </div>
             </div>
           </div>
@@ -38,35 +50,39 @@
     <div class="col-12 col-lg-8 order-2 order-lg-2">
       <div class="card">
         <div class="card-body">
-            <tabset class="member-tabset">
-      <tab heading="About {{ member.knownAs }}">
-        <h4>Description</h4>
-        <p>{{ member.introduction }}</p>
-        <h4>Looking for</h4>
-        <p>{{ member.lookingFor }}</p>
-      </tab>
-      <tab heading="Interents">
-        <h4>Interents</h4>
-        <p>{{ member.interests }}</p>
-      </tab>
-      <tab heading="Photos" #photoTab="tab">
-        @if (photoTab.active) {
-        <gallery
-          [items]="images"
-          class="gallery"
-          counter="true"
-          itemAutosize="false"
-        >
-        </gallery>
-        }
-      </tab>
-      <tab heading="Messages">
-        <p>Messages will go here</p>
-      </tab>
-    </tabset>
+          <tabset class="member-tabset" #memberTabs>
+            <tab heading="About {{ member.knownAs }}" (selectTab)="onTabActivated($event)">
+              <h4>Description</h4>
+              <p>{{ member.introduction }}</p>
+              <h4>Looking for</h4>
+              <p>{{ member.lookingFor }}</p>
+            </tab>
+            <tab heading="Interents" (selectTab)="onTabActivated($event)">
+              <h4>Interents</h4>
+              <p>{{ member.interests }}</p>
+            </tab>
+            <tab heading="Photos" #photoTab="tab" (selectTab)="onTabActivated($event)">
+              @if (photoTab.active) {
+              <gallery
+                [items]="images"
+                class="gallery"
+                counter="true"
+                itemAutosize="false"
+              >
+              </gallery>
+              }
+            </tab>
+            <tab heading="Messages" (selectTab)="onTabActivated($event)">
+              <app-member-messages 
+                [username]="member.username" 
+                [messages]="messages"
+                (updateMessages)="onUpdateMessages($event)"
+              />
+            </tab>
+          </tabset>
         </div>
       </div>
     </div>
   </div>
 </div>
-}
+
