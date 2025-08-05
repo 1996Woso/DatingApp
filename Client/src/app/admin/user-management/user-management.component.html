@@ -1,20 +1,99 @@
-<div class="row">
+<div class="container-fluid">
+  <!--Header-->
+  <div class="row">
+    <div class="col-12 text-start mt-2">
+      <h4>
+        Users found :
+        <span class="text-success">
+          {{ adminService.paginatedResult()?.pagination?.totalItems }}
+        </span>
+      </h4>
+    </div>
+  </div>
+  <!--Filters serction-->
+  <div class="row">
+    <div class="col-12 mt-3">
+      <form #form="ngForm" (submit)="getUsersWithRoles()">
+        <div class="row g-1">
+          <!--Username filter-->
+          <div class="col-md-8 col-lg-6 col-sm-8">
+            <label class="form-label">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              name="username"
+              [(ngModel)]="adminService.adminParams().username"
+            />
+          </div>
+        </div>
+        <!--Action Buttons-->
+        <div class="row mb-2">
+          <div class="col-12 col-md-6 col-lg-6">
+            <label class="form-label d-done d-md-block">&nbsp;</label>
+            <div class="d-flex flex-wrap gap-1">
+              <button class="btn btn-primary" type="submit">
+                <i class="bi bi-send"></i> Apply filters
+              </button>
+              <button
+                class="btn btn-info"
+                type="button"
+                (click)="resetFilters()"
+              >
+                <i class="bi bi-arrow-clockwise"></i> Reset filters
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--Users table-->
+  <div class="row">
     <table class="table">
-        <thead>
-            <tr>
-                <th style="max-width: 30%;">Username</th>
-                 <th style="max-width: 40%;">Active Roles</th>
-                  <th style="max-width: 30%;"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (user of users; track user.username) {
-                <tr>
-                    <td>{{user.username}}</td>
-                    <td>{{user.roles}}</td>
-                    <td><button (click)="openRolesModal(user)" class="btn btn-info">Edit Roles</button></td>
-                </tr>
-            }
-        </tbody>
+      <thead>
+        <tr>
+          <th style="max-width: 30%">Username</th>
+          <th style="max-width: 40%">Active Roles</th>
+          <th style="max-width: 30%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of adminService.paginatedResult()?.items; track
+        user.username) {
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.roles }}</td>
+          <td>
+            <button (click)="openRolesModal(user)" class="btn btn-info">
+              Edit Roles
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
     </table>
+  </div>
+  <!--Pagination-->
+
+  @if (adminService.paginatedResult()?.pagination) {
+  <div class="row mt-4">
+    <div class="col-12 d-flex justify-content-center">
+      <pagination
+        [boundaryLinks]="true"
+        [totalItems]="(adminService.paginatedResult()?.pagination)!.totalItems"
+        [itemsPerPage]="
+          (adminService.paginatedResult()?.pagination)!.itemsPerPage
+        "
+        (pageChanged)="pageChanged($event)"
+        [(ngModel)]="adminService.paginatedResult()!.pagination!.currentPage"
+        [maxSize]="10"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;"
+      >
+      </pagination>
+    </div>
+  </div>
+  }
 </div>

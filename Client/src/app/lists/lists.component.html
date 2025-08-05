@@ -44,7 +44,7 @@
   </div>
 
   <!--Pagination-->
-  @if (likesService.paginatedResult()?.pagination) {
+  @if (likesService.paginatedResult()?.pagination?.totalItems) {
   <div class="row mt-4">
     <div class="col-12 d-flex justify-content-center">
       <pagination

@@ -4,15 +4,18 @@ import { User } from '../../_models/user';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { RolesModalComponent } from '../../modals/roles-modal/roles-modal.component';
 import { ToastrService } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
+import { PageChangedEvent, PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 @Component({
   selector: 'app-user-management',
-  imports: [],
+  imports: [FormsModule, PaginationModule, ButtonsModule],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.css',
 })
 export class UserManagementComponent implements OnInit {
-  private adminService = inject(AdminService);
+  adminService = inject(AdminService);
   private modalService = inject(BsModalService);
   private toastr = inject(ToastrService);
   users: User[] = [];
@@ -20,7 +23,7 @@ export class UserManagementComponent implements OnInit {
     new BsModalRef<RolesModalComponent>();
 
   ngOnInit(): void {
-    this.getUsersWithRoles();
+    if (!this.adminService.paginatedResult()) this.getUsersWithRoles();
   }
 
   openRolesModal(user: User) {
@@ -57,8 +60,17 @@ export class UserManagementComponent implements OnInit {
   }
 
   getUsersWithRoles() {
-    this.adminService.getUserWithRoles().subscribe({
-      next: (users) => (this.users = users),
-    });
+    this.adminService.getUserWithRoles();
+  }
+
+  pageChanged(event: any) {
+    if (this.adminService.adminParams().pageNumber != event.page) {
+      this.adminService.adminParams().pageNumber = event.page;
+      this.getUsersWithRoles();
+    }
+  }
+  resetFilters() {
+    this.adminService.resetAdminParams();
+    this.getUsersWithRoles();
   }
 }

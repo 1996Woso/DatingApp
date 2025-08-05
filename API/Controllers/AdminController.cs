@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using API.Extensions;
+using API.Models;
 using API.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,9 +21,9 @@ namespace API.Controllers
         
         [HttpGet("users-with-roles")]
         [Authorize(Policy = "RequireAdminRole")]
-        public async Task<ActionResult> GetUsersWithRoles()
+        public async Task<ActionResult> GetUsersWithRoles([FromQuery] AdminParams adminParams)
         {
-            var users = await userManager.Users
+            var query = userManager.Users.AsQueryable()
                 .OrderBy(x => x.UserName)
                 .Select(x => new
                 {
@@ -29,7 +31,15 @@ namespace API.Controllers
                     Username = x.UserName,
                     Roles = x.UserRoles.Select(r => r.Role.Name).ToList()
 
-                }).ToListAsync();
+                });
+
+            if (!string.IsNullOrEmpty(adminParams.Username))
+            {
+                query = query.Where(x => x.Username!.ToLower().Contains(adminParams.Username.ToLower()));
+            }
+
+            var users = await PagedList<dynamic>.CreateAsync(query,adminParams.PageNumber, adminParams.PageSize);
+            Response.AddPaginationHeader(users);
             return Ok(users);
         }
 
