@@ -32,19 +32,20 @@
     </ul>
     }
   </div>
-  <div class="card-body p-1">
+  <div class="card-body p-1 text-muted">
     <p class="card-title text-center mb-1">
       <b>
         @if (member().gender.toLowerCase() === 'female') {
         <i class="bi bi-person-standing-dress fs-5"></i>
         {{ member().knownAs }}, {{ member().age }} Yrs }@else {
         <i class="bi bi-person-standing fs-5"></i>
-        {{ member().knownAs }}, {{ member().age }} Yrs } @if (hasLiked()){
+        {{ member().knownAs }}, {{ member().age }} Yrs } 
+        @if (hasLiked()){
         <i class="bi bi-heart-fill text-danger"></i>
         }
       </b>
     </p>
-    <p class="card-text text-muted text-center">
+    <p class="card-text text-center">
       <i class="bi bi-geo-alt-fill"></i>
       {{ member().city }},{{ member().country }}
     </p>

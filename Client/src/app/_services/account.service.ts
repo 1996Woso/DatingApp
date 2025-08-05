@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { User } from '../_models/user';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -9,15 +9,19 @@ import { LikesService } from './likes.service';
   providedIn: 'root',
 })
 export class AccountService {
-  /**
-   *
-   */
   constructor(private http: HttpClient) {}
-  // private http = inject(HttpClient);
   private likeService = inject(LikesService);
   apiUrl = environment.apiUrl;
   currentUser = signal<User | null>(null);
   defaultImage: string = "https://res.cloudinary.com/dfaqqc2ge/image/upload/v1752435852/user_ol7be4.png";
+  roles = computed(() => {
+    const user = this.currentUser();
+    if (user && user.token) {
+      const role = JSON.parse(atob(user.token.split('.')[1])).role;
+      return Array.isArray(role) ? role : [role];
+    }
+    return [];
+  });
 
   Login(model: any) {
     return this.http.post<User>(this.apiUrl + 'account/login', model).pipe(
@@ -25,6 +29,7 @@ export class AccountService {
         if (user) {
           this.setCurrentUser(user);
         }
+        return null;
       })
     );
   }

@@ -6,6 +6,7 @@ using API.Interfaces;
 using API.Models.Domain;
 using API.Models.DTOs;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories.Account;
@@ -15,46 +16,43 @@ public class AccountRepository : IAccountRepository
     private readonly DataContext dataContext;
     private readonly IUsersRepository usersRepository;
     private readonly IMapper mapper;
+    private readonly UserManager<AppUser> userManager;
 
     public AccountRepository(DataContext dataContext
     , IUsersRepository usersRepository
     ,IMapper mapper
+    ,UserManager<AppUser> userManager
     )
     {
         this.dataContext = dataContext;
         this.usersRepository = usersRepository;
         this.mapper = mapper;
+        this.userManager = userManager;
     }
 
     public async Task<AppUser> RegisterAsync(RegisterDTO registerDTO)
     {
-        using var hmac = new HMACSHA512();
+        await Task.Delay(0);
         var user = mapper.Map<AppUser>(registerDTO);
         user.UserName = registerDTO.Username.ToLower();
-        user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password));
-        user.PasswordSalt = hmac.Key;
-        await dataContext.AddAsync(user);
-        await dataContext.SaveChangesAsync();
         return user;
     }
 
     public async Task<bool> CorrectPasswordAsync(LoginDTO loginDTO)
     {
-        var user = await usersRepository.GetUserByUsernameAsync(loginDTO.Username);
+        var result = await userManager.CheckPasswordAsync(await LoginAsync(loginDTO), loginDTO.Password);
 
-        using var hmac = new HMACSHA512(user!.PasswordSalt);
-        var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDTO.Password));
-        for (int i = 0; i < computedHash.Length; i++)
-        {
-            if (computedHash[i] != user.PasswordHash[i])
-                return false;
-        }
+        if (!result) return false;
         return true;
     }
 
     public async Task<AppUser> LoginAsync(LoginDTO loginDTO)
     {
-        var user = await usersRepository.GetUserByUsernameAsync(loginDTO.Username);
+        // var user = await usersRepository.GetUserByUsernameAsync(loginDTO.Username);
+        var user = await userManager.Users
+            .Include(p => p.Photos)
+            .FirstOrDefaultAsync(x =>
+                x.NormalizedUserName == loginDTO.Username.ToUpper());
         return user!;
     }
 }

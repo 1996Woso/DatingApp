@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using API.Interfaces;
 using API.Models;
 using System.IO.Compression;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Repositories;
 
@@ -15,12 +16,16 @@ public class UsersRepository : IUsersRepository
 {
     private readonly DataContext dataContext;
     private readonly IMapper mapper;
+    private readonly UserManager<AppUser> userManager;
 
     public UsersRepository(DataContext dataContext
-    , IMapper mapper)
+    , IMapper mapper
+    ,UserManager<AppUser> userManager
+    )
     {
         this.dataContext = dataContext;
         this.mapper = mapper;
+        this.userManager = userManager;
     }
 
     public async Task<AppUser?> GetUserByIdAsync(int id)
@@ -39,12 +44,12 @@ public class UsersRepository : IUsersRepository
     {
         var user = await dataContext.Users
                .Include(x => x.Photos)
-               .SingleOrDefaultAsync(x => x.UserName.ToLower() == username.ToLower());
+               .SingleOrDefaultAsync(x => x.NormalizedUserName == username.ToUpper());
         return user;
     }
     public async Task<bool> UserExistsAsync(string username)
     {
-        return await dataContext.Users.AnyAsync(x => x.UserName.ToLower() == username.ToLower());
+        return await userManager.Users.AnyAsync(x => x.NormalizedUserName == username.ToUpper());
     }
     public async Task<bool> SaveAllAsync()
     {
@@ -54,7 +59,7 @@ public class UsersRepository : IUsersRepository
     public async Task<AppUserDTO?> GetUserDtoByUsernameAsync(string username)
     {
         return await dataContext.Users
-            .Where(x => x.UserName.ToLower() == username.ToLower())
+            .Where(x => x.NormalizedUserName == username.ToUpper())
             .ProjectTo<AppUserDTO>(mapper.ConfigurationProvider)
             .SingleOrDefaultAsync();
     }

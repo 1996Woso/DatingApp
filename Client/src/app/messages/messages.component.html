@@ -35,12 +35,12 @@
       <h5>No messages</h5>
       }@else {
       <table class="table table-hover mt-3" style="cursor: pointer">
-        <thead>
+        <thead class="table-success">
           <tr>
-            <th style="width: 40%">Message</th>
-            <th style="width: 20%">From / To</th>
-            <th style="width: 20%">Sent / Received</th>
-            <th style="width: 20%">Message</th>
+            <th style="max-width: 75%">Message</th>
+            <th style="max-width: 10%">From / To</th>
+            <th style="max-width: 10%">Sent / Received</th>
+            <th style="max-width: 5%">Action</th>
           </tr>
         </thead>
         <tbody class="align-middle">
@@ -57,15 +57,17 @@
                             alt=""
                             class="rounded-circle"
                         >
-                        <strong> {{isOutbox
-                        ? message.recipientUsername : message.senderUsername}}</strong>
+                        <b> {{isOutbox
+                        ? message.recipientUsername : message.senderUsername}}</b>
                     </div>
                 </td>
                 <td>
                     {{message.messageSent | timeago}}
                 </td>
                 <td (click)="$event.stopPropagation()">
-                    <button class="btn btn-danger" (click)="deleteMessage(message.id)">Delete</button>
+                    <button class="btn" (click)="deleteMessage(message.id)">
+                      <i class="bi bi-trash3 text-danger"></i>
+                    </button>
                 </td>
             </tr>
           }

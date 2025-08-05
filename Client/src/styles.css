@@ -85,3 +85,10 @@ a, button {
 .bi {
     font-size: 1rem;
 }
+
+.btn-info {
+  color: white;
+}
+.btn:hover {
+  color:white;
+}

@@ -6,7 +6,7 @@ namespace API.Models.DTOs;
 public class RegisterDTO
 {
     [Required]
-    [StringLength(30, MinimumLength = 4)]
+    [StringLength(30, MinimumLength = 2)]
     public string Username { get; set; } = "";
     public required string KnownAs { get; set; }
     public required string Gender { get; set; }

@@ -2,3 +2,9 @@ img {
     height: 50px;
     width: 50px;
 }
+td {
+    font-size: 0.9rem;
+}
+th {
+    font-size: 0.9rem;
+}
