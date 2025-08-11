@@ -4,6 +4,7 @@ import { User } from '../_models/user';
 import { map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LikesService } from './likes.service';
+import { PresenceService } from './presence.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import { LikesService } from './likes.service';
 export class AccountService {
   constructor(private http: HttpClient) {}
   private likeService = inject(LikesService);
+  private presenceService = inject(PresenceService);
   apiUrl = environment.apiUrl;
   currentUser = signal<User | null>(null);
   defaultImage: string = "https://res.cloudinary.com/dfaqqc2ge/image/upload/v1752435852/user_ol7be4.png";
@@ -37,6 +39,7 @@ export class AccountService {
   Logout() {
     localStorage.removeItem('user');
     this.currentUser.set(null);
+    this.presenceService.stopHubConnection();
   }
 
   Register(model: any) {
@@ -55,5 +58,7 @@ export class AccountService {
     this.currentUser.set(user);
     //Get like ids
     this.likeService.getLikeIds();
+    this.presenceService.createHubConnection(user);
   }
 }
+ 

@@ -22,9 +22,10 @@
         </button>
       </li>
       <li class="list-inline-item">
-        <button class="btn btn"
-          routerLink="/members/{{member().username}}"
-          [queryParams]="{tab: 'Messages'}"
+        <button
+          class="btn btn"
+          routerLink="/members/{{ member().username }}"
+          [queryParams]="{ tab: 'Messages' }"
         >
           <i class="bi bi-envelope-fill"></i>
         </button>
@@ -35,12 +36,18 @@
   <div class="card-body p-1 text-muted">
     <p class="card-title text-center mb-1">
       <b>
+        @if (isOnline()){
+        <span [class.is-online]="isOnline()">Online</span>
+        } @else {
+        <span class="text-danger">Offline</span>
+        }
+        <br />
         @if (member().gender.toLowerCase() === 'female') {
         <i class="bi bi-person-standing-dress fs-5"></i>
-        {{ member().knownAs }}, {{ member().age }} Yrs }@else {
+        }@else {
         <i class="bi bi-person-standing fs-5"></i>
-        {{ member().knownAs }}, {{ member().age }} Yrs } 
-        @if (hasLiked()){
+        }
+        {{ member().knownAs }}, {{ member().age }} Yrs @if (hasLiked()){
         <i class="bi bi-heart-fill text-danger"></i>
         }
       </b>
