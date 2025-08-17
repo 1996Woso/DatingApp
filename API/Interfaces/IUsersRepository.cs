@@ -11,7 +11,6 @@ public interface IUsersRepository
     Task<AppUser?> GetUserByIdAsync(int id);
     Task<AppUser?> GetUserByUsernameAsync(string username);
     Task<bool> UserExistsAsync(string username);
-    Task<bool> SaveAllAsync();
     Task<AppUserDTO?> GetUserDtoByUsernameAsync(string username);
     Task<PagedList<AppUserDTO>> GetUsersDtoAsync(UserParams userParams);
     Task<AppUserDTO?> GetUserDtoById(int id);

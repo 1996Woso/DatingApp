@@ -51,10 +51,6 @@ public class UsersRepository : IUsersRepository
     {
         return await userManager.Users.AnyAsync(x => x.NormalizedUserName == username.ToUpper());
     }
-    public async Task<bool> SaveAllAsync()
-    {
-        return await dataContext.SaveChangesAsync() > 0;
-    }
 
     public async Task<AppUserDTO?> GetUserDtoByUsernameAsync(string username)
     {

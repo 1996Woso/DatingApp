@@ -11,29 +11,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [Authorize]
-    public class MessagesController : BaseApiController
+    public class MessagesController(IMapper mapper, IUnitOfWork unitOfWork) : BaseApiController
     {
-        private readonly IMessageRepository messageRepository;
-        private readonly IUsersRepository usersRepository;
-        private readonly IMapper mapper;
-
-        public MessagesController(IMessageRepository messageRepository
-        , IUsersRepository usersRepository
-        , IMapper mapper)
-        {
-            this.messageRepository = messageRepository;
-            this.usersRepository = usersRepository;
-            this.mapper = mapper;
-        }
-
         [HttpPost]
         public async Task<ActionResult> CreateMessage(CreateMessageDTO createMessageDTO)
         {
             var username = User.GetUsername();
             if (username == createMessageDTO.RecipientUsername.ToLower())
                 return BadRequest("You cannot message yourself");
-            var sender = await usersRepository.GetUserByUsernameAsync(username);
-            var recipient = await usersRepository.GetUserByUsernameAsync(createMessageDTO.RecipientUsername);
+            var sender = await unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
+            var recipient = await unitOfWork.UsersRepository.GetUserByUsernameAsync(createMessageDTO.RecipientUsername);
 
             if (recipient == null || sender == null || recipient.UserName == null)
                 return BadRequest("Cannot send message at this time");
@@ -46,9 +33,9 @@ namespace API.Controllers
                 RecipientUsername = recipient.UserName,
                 Content = createMessageDTO.Content
             };
-            messageRepository.AddMessage(message);
+            unitOfWork.MessageRepository.AddMessage(message);
 
-            if (await messageRepository.SaveAllAsync())
+            if (await unitOfWork.CompleteAsync())
                 return Ok(mapper.Map<MessageDTO>(message));
 
             return BadRequest("Failed to save message");
@@ -60,7 +47,7 @@ namespace API.Controllers
             [FromQuery] MessageParams messageParams)
         {
             messageParams.Username = User.GetUsername();
-            var messages = await messageRepository.GetMessagesForUserAsync(messageParams);
+            var messages = await unitOfWork.MessageRepository.GetMessagesForUserAsync(messageParams);
             Response.AddPaginationHeader(messages);
             return Ok(messages);
         }
@@ -70,14 +57,14 @@ namespace API.Controllers
         {
             var currentUsername = User.GetUsername();
 
-            return Ok(await messageRepository.GetMessageThreadAsync(currentUsername, username));
+            return Ok(await unitOfWork.MessageRepository.GetMessageThreadAsync(currentUsername, username));
         }
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteMessage(int id)
         {
             var username = User.GetUsername();
-            var message = await messageRepository.GetMessageAsync(id);
+            var message = await unitOfWork.MessageRepository.GetMessageAsync(id);
 
             if (message == null) return BadRequest("You cannot delete this message");
 
@@ -89,10 +76,10 @@ namespace API.Controllers
 
             if (message is { SenderDeleted: true, RecipientDeleted: true })
             {
-                messageRepository.DeleteMessage(message);
+                unitOfWork.MessageRepository.DeleteMessage(message);
             }
 
-            if (await messageRepository.SaveAllAsync()) return Ok();
+            if (await unitOfWork.CompleteAsync()) return Ok();
 
             return BadRequest("There was a problem while deleting message");
 

@@ -38,10 +38,11 @@
       <b>
         @if (isOnline()){
         <span [class.is-online]="isOnline()">Online</span>
-        } @else {
+        <br>
+        } 
+        <!-- @else {
         <span class="text-danger">Offline</span>
-        }
-        <br />
+        } -->
         @if (member().gender.toLowerCase() === 'female') {
         <i class="bi bi-person-standing-dress fs-5"></i>
         }@else {

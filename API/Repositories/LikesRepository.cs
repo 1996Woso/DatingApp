@@ -72,9 +72,4 @@ public class LikesRepository : ILikesRepository
         }
         return await PagedList<AppUserDTO>.CreateAsync(query, likesParams.PageNumber, likesParams.PageSize);
     }
-
-    public async Task<bool> SaveChangesAsync()
-    {
-        return await dataContext.SaveChangesAsync() > 0;
-    }
 }

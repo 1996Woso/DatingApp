@@ -10,17 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Repositories;
 
-public class MessageRepository : IMessageRepository
+public class MessageRepository(IMapper mapper, DataContext dataContext) : IMessageRepository
 {
-    private readonly DataContext dataContext;
-    private readonly IMapper mapper;
-
-    public MessageRepository(DataContext dataContext, IMapper mapper)
-    {
-        this.dataContext = dataContext;
-        this.mapper = mapper;
-    }
-
     public void AddGroup(Group group)
     {
         dataContext.Groups.Add(group);
@@ -82,24 +73,22 @@ public class MessageRepository : IMessageRepository
 
     public async Task<IEnumerable<MessageDTO>> GetMessageThreadAsync(string currentUsername, string recipientUsername)
     {
-        var messages = await dataContext.Messages
+        var query = dataContext.Messages
             .Where(x =>
                 x.RecipientUsername == currentUsername && x.SenderUsername == recipientUsername && x.RecipientDeleted == false ||
                 x.SenderUsername == currentUsername && x.RecipientUsername == recipientUsername && x.SenderDeleted == false
             )
             .OrderBy(x => x.MessageSent)
-            .ProjectTo<MessageDTO>(mapper.ConfigurationProvider)
-            .ToListAsync();
-        var unreadMessages = messages.Where(x => x.DateRead == null &&
+            .AsQueryable();
+        var unreadMessages = query.Where(x => x.DateRead == null &&
             x.RecipientUsername == currentUsername).ToList();
 
         if (unreadMessages.Count > 0)
         {
             unreadMessages.ForEach(x => x.DateRead = DateTime.UtcNow);
-            await dataContext.SaveChangesAsync();
         }
 
-        return messages;
+        return await query.ProjectTo<MessageDTO>(mapper.ConfigurationProvider).ToListAsync();
     }
 
     public void RemoveConnection(Connection connection)
@@ -107,8 +96,4 @@ public class MessageRepository : IMessageRepository
         dataContext.Connections.Remove(connection);
     }
 
-    public async Task<bool> SaveAllAsync()
-    {
-        return await dataContext.SaveChangesAsync() > 0;
-    }
 }
