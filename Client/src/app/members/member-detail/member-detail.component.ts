@@ -54,7 +54,7 @@ export class MemberDetailComponent implements OnInit, OnDestroy {
       next: (data) => {
         this.member = data['member'];
         this.member &&
-          this.member.photos.map((p) => {
+          this.member.photos.filter(x => x.isApproved === true).map((p) => {
             this.images.push(new ImageItem({ src: p.url, thumb: p.url }));
           });
       },

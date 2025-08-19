@@ -65,15 +65,4 @@ export class MembersService {
       .pipe
       ();
   }
-  setMainPhoto(photo: Photo) {
-    return this.http
-      .put(this.apiUrl + 'users/set-main-photo/' + photo.id, {})
-      .pipe();
-  }
-  deletePhoto(photo: Photo) {
-    return this.http
-      .delete(this.apiUrl + 'users/delete-photo/' + photo.id)
-      .pipe
-      ();
-  }
 }

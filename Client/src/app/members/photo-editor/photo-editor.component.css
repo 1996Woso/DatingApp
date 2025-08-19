@@ -1,3 +1,19 @@
 .nv-file-over {
-    border: dotted 3px red;
+    border: dotted 3px rgb(53, 53, 133);
+}
+.img-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.status-overlay {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.5rem;
 }

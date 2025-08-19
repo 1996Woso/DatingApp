@@ -1,1 +1,46 @@
-<p>photo-management works!</p>
+<div class="container-fluid">
+  <div class="row">
+    @if (!photoService.paginatedResult()?.items ||
+    photoService.paginatedResult()?.items?.length === 0) {
+    <h5>No Photos</h5>
+    } @for (photo of photoService.paginatedResult()?.items; track photo.id) {
+    <div class="col-12 col-md-3 col-sm-4 col-lg-2 col-xl-2">
+      <img src="{{ photo.url }}" alt="users photo" class="img-thumbnail mb-1" />
+      <div class="text-center">
+        <div class="btn-group">
+          <button class="btn btn-success" (click)="approvePhoto(photo)">
+            Approve
+          </button>
+          <button class="btn btn-danger" (click)="rejectPhoto(photo)">
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!--Pagination-->
+  @if (photoService.paginatedResult()?.pagination &&
+  photoService.paginatedResult()?.pagination?.totalItems! > 0 ) {
+  <div class="row mt-4">
+    <div class="col-12 d-flex justify-content-center">
+      <pagination
+        [boundaryLinks]="true"
+        [totalItems]="(photoService.paginatedResult()?.pagination)!.totalItems"
+        [itemsPerPage]="
+          (photoService.paginatedResult()?.pagination)!.itemsPerPage
+        "
+        (pageChanged)="pageChanged($event)"
+        [(ngModel)]="photoService.paginatedResult()!.pagination!.currentPage"
+        [maxSize]="10"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;"
+      >
+      </pagination>
+    </div>
+  </div>
+  }
+</div>
