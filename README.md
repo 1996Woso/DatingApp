@@ -23,5 +23,6 @@ A web-based dating platform that enables users to create profiles, discover pote
 - Angular
 - TypeScript
 - ngx-bootstrap
+- HTML & CSS
 - Bootstrap
   
