@@ -5,6 +5,10 @@
     <p>{{message}}</p>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-success" type="button" (click)="confirm()">{{btnOkText}}</button>
-    <button class="btn btn-danger" type="button" (click)="decline()">{{btnCancelText}}</button>
+    <button class="btn btn-success" type="button" (click)="confirm()">
+        <i class="bi bi-hand-index-fill"></i> {{btnOkText}}
+    </button>
+    <button class="btn btn-danger" type="button" (click)="decline()">
+        <i class="bi bi-x-circle"></i> {{btnCancelText}}
+    </button>
 </div>

@@ -1,6 +1,7 @@
 <div class="containder mt-5">
   <div class="text-center">
     @if(!registerMode){
+    <span style="font-size: 5rem;">❤️ </span>
     <h1>Find your match</h1>
     <p class="lead">
       Come on in to view matches... all you need to do is sign up!
@@ -14,7 +15,7 @@
     }@else {
     <div class="containder">
       <div class="row justify-content-center">
-        <div class="col-lg-4">
+        <div class="col-sm-10 col-md-12 col-lg-10 col-xl-8">
           <app-register
             [usersFromHomeComp]="users"
             (cancelRegister)="cancelRegisterMode($event)"

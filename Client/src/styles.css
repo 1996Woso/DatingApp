@@ -3,7 +3,8 @@ body {
   margin: 0;
   background-color: rgb(236, 234, 234);
 }
-a, button {
+a,
+button {
   font-weight: bold !important;
   font-size: 0.8rem !important;
 }
@@ -13,26 +14,30 @@ a, button {
   border-radius: 4px;
 }
 
-.nav-tabs > li.open, .member-tabset > .nav-tabs > li:hover {
-  border-bottom: 4px solid rgba(34, 147, 159,0.4);
+.nav-tabs > li.open,
+.member-tabset > .nav-tabs > li:hover {
+  border-bottom: 4px solid rgba(184, 50, 61,0.4);;
 }
 
-.member-tabset > .nav-tabs > li.open > a, .member-tabset > .nav-tabs > li:hover > a {
+.member-tabset > .nav-tabs > li.open > a,
+.member-tabset > .nav-tabs > li:hover > a {
   border: 0;
   background: none !important;
   color: #333333;
 }
 
-.member-tabset > .nav-tabs > li.open > a > i, .member-tabset > .nav-tabs > li:hover > a > i {
+.member-tabset > .nav-tabs > li.open > a > i,
+.member-tabset > .nav-tabs > li:hover > a > i {
   color: #a6a6a6;
 }
 
-.member-tabset > .nav-tabs > li.open .dropdown-menu, .member-tabset > .nav-tabs > li:hover .dropdown-menu {
+.member-tabset > .nav-tabs > li.open .dropdown-menu,
+.member-tabset > .nav-tabs > li:hover .dropdown-menu {
   margin-top: 0px;
 }
 
 .member-tabset > .nav-tabs > li.active {
-  border-bottom: 4px solid rgb(34, 147, 159);
+  border-bottom: 4px solid rgb(184, 50, 61);;
   position: relative;
 }
 
@@ -83,12 +88,40 @@ a, button {
   opacity: 1;
 }
 .bi {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .btn-info {
-  color: white;
+  color: white !important;
+  background-color: #009688 !important;
 }
+
+.btn-primary {
+  background-color: #e91e63 !important;
+  border-color: #e91e63 !important;
+}
+
 .btn-info:hover {
-  color:white;
+  color: white !important;
+  background-color: #368880 !important;
+}
+
+.btn-primary:hover {
+  background-color: #eb3672 !important;
+  border-color: #e91e63 !important;
+}
+
+.table-header-colour {
+  background-color: rgb(184, 50, 61) !important;
+}
+
+/* thead {
+  background-color: rgb(184, 50, 61) !important;
+} */
+
+table thead {
+  background-color: #C2185B !important; /* Deep Rose */
+  color: #FFFFFF !important;            /* White text for contrast */
+  font-weight: bold !important;
+  text-align: left !important;
 }

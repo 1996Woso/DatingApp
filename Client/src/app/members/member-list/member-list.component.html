@@ -11,106 +11,102 @@
     </div>
   </div>
   <!--Filters section-->
-  <div class="row">
-    <div class="col-12 mt-3">
-      <form #form="ngForm" (submit)="loadMembers()">
-        <!--Age and Gender Filters-->
-        <div class="row g-1 mb-3">
-          <!--Age From-->
-          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-            <label class="form-label">Age from:</label>
-            <input
-              type="number"
-              class="form-control"
-              style="width: 70px"
-              name="minAge"
-              [(ngModel)]="memberService.userParams().minAge"
-            />
-          </div>
-          <!--Age To-->
-          <div class="col-6 col-sm-4 col-md-3 col-lg-2">
-            <label class="form-label">Age to:</label>
-            <input
-              type="number"
-              class="form-control"
-              style="width: 70px"
-              name="maxAge"
-              [(ngModel)]="memberService.userParams().maxAge"
-            />
-          </div>
-          <!--Gender Select-->
-          <div class="col-6 col-sm-4 col-md-4 col-lg-2">
-            <label class="form-label">Show:</label>
-            <select
-              name="gender"
-              class="form-select"
-              style="width: 130px"
-              [(ngModel)]="memberService.userParams().gender"
-            >
-              @for (gender of genderList; track gender.value) {
-              <option [value]="gender.value">
-                {{ gender.display }}
-              </option>
-              }
-            </select>
-          </div>
-          <!--Action Buttons-->
-          <div class="col-12 col-md-6 col-lg-6">
-            <label class="form-label d-done d-md-block">&nbsp;</label>
-            <div class="d-flex flex-wrap gap-1">
-              <button class="btn btn-primary" type="submit">
-                <i class="bi bi-send"></i> Apply filters
-              </button>
-              <button
-                class="btn btn-info"
-                type="button"
-                (click)="resetFilters()"
-              >
-                <i class="bi bi-arrow-clockwise"></i> Reset filters
-              </button>
-            </div>
-          </div>
-        </div>
-        <!--Sort Options-->
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-6">
-            <div
-              class="d-flex justify-content-lg-start justify-content-md-start justify-content-sm-start"
-            >
-              <div class="btn-group" role="group">
-                <button
-                  class="btn btn-primary"
-                  type="button"
-                  name="orderBy"
-                  (click)="loadMembers()"
-                  btnRadio="lastActive"
-                  [(ngModel)]="memberService.userParams().orderBy"
-                >
-                  <span class="d-done d-sm-inline"
-                    ><i class="bi bi-clock-history"></i> Last Active</span
-                  >
-                </button>
-                <button
-                  class="btn btn-primary"
-                  type="button"
-                  name="orderBy"
-                  (click)="loadMembers()"
-                  btnRadio="created"
-                  [(ngModel)]="memberService.userParams().orderBy"
-                >
-                  <span class="d-done d-sm-inline">
-                    <i class="bi bi-clock-fill"></i>
-                    New Members</span
-                  >
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
+  <form #form="ngForm" (submit)="loadMembers()">
+    <!--Age and Gender Filters-->
+    <div class="row g-1 mb-2">
+      <!--Age From-->
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <label class="form-label">Age from:</label>
+        <input
+          type="number"
+          class="form-control"
+          style="width: 70px"
+          name="minAge"
+          [(ngModel)]="memberService.userParams().minAge"
+        />
+      </div>
+      <!--Age To-->
+      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <label class="form-label">Age to:</label>
+        <input
+          type="number"
+          class="form-control"
+          style="width: 70px"
+          name="maxAge"
+          [(ngModel)]="memberService.userParams().maxAge"
+        />
+      </div>
+      <!--Gender Select-->
+      <div class="col-6 col-sm-4 col-md-4 col-lg-2">
+        <label class="form-label">Show:</label>
+        <select
+          name="gender"
+          class="form-select"
+          style="width: 130px"
+          [(ngModel)]="memberService.userParams().gender"
+        >
+          @for (gender of genderList; track gender.value) {
+          <option [value]="gender.value">
+            {{ gender.display }}
+          </option>
+          }
+        </select>
+      </div>
     </div>
-  </div>
-
+    <!--Action Buttons-->
+    <div class="row">
+      <div class="col-6 col-sm-6 col-md-4 col-lg-2 col-xl-2 mb-2">
+        <button class="btn btn-primary w-100" type="submit">
+          <i class="bi bi-funnel"></i> Apply filters
+        </button>
+      </div>
+      <div class="col-6 col-sm-6 col-md-4 col-lg-2 col-xl-2 mb-2">
+        <button
+          class="btn btn-info w-100"
+          type="button"
+          (click)="resetFilters()"
+        >
+          <i class="bi bi-arrow-clockwise"></i> Reset filters
+        </button>
+      </div>
+    </div>
+    <!--Sort Options-->
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-4 col-xl-4">
+        <div
+          class="d-flex justify-content-lg-start justify-content-md-start justify-content-sm-start"
+        >
+          <div class="btn-group w-100" role="group">
+            <button
+              class="btn btn-primary"
+              type="button"
+              name="orderBy"
+              (click)="loadMembers()"
+              btnRadio="lastActive"
+              [(ngModel)]="memberService.userParams().orderBy"
+            >
+              <span class="d-done d-sm-inline"
+                ><i class="bi bi-clock-history"></i> Last Active</span
+              >
+            </button>
+            <button
+              class="btn btn-primary"
+              type="button"
+              name="orderBy"
+              (click)="loadMembers()"
+              btnRadio="created"
+              [(ngModel)]="memberService.userParams().orderBy"
+            >
+              <span class="d-done d-sm-inline">
+                <i class="bi bi-clock-fill"></i>
+                New Members</span
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
   <!--Members grid-->
   <div class="row g-3 mt-3">
     @for(member of memberService.paginatedResult()?.items; track member.id){
