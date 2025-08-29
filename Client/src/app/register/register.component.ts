@@ -20,14 +20,12 @@ import {
 import { AccountService } from '../_services/account.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { JsonPipe, NgIf } from '@angular/common';
 import { TextInputComponent } from "../_forms/text-input/text-input.component";
-import { TestErrorsComponent } from "../errors/test-errors/test-errors.component";
 import { DatePickerComponent } from "../_forms/date-picker/date-picker.component";
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, JsonPipe, NgIf, TextInputComponent, TestErrorsComponent, DatePickerComponent],
+  imports: [ReactiveFormsModule, TextInputComponent, DatePickerComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })

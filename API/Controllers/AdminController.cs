@@ -35,7 +35,7 @@ namespace API.Controllers
 
             if (!string.IsNullOrEmpty(adminParams.Username))
             {
-                query = query.Where(x => x.Username!.ToLower().Contains(adminParams.Username.ToLower()));
+                query = query.Where(x => EF.Functions.Like(x.Username, $"%{adminParams.Username}%"));
             }
 
             var users = await PagedList<dynamic>.CreateAsync(query,adminParams.PageNumber, adminParams.PageSize);

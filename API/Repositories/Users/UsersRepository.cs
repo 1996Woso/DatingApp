@@ -73,7 +73,19 @@ public class UsersRepository : IUsersRepository
         var minDoB = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
         var maxDoB = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
         query = query.Where(x => x.DateOfBirth >= minDoB && x.DateOfBirth <= maxDoB);
+        //Search by filtering
+        var searchString = userParams.SearchString;
+        if (!string.IsNullOrEmpty(searchString))
+        {
 
+            query = query.Where(x =>
+                EF.Functions.Like(x.City, $"%{searchString}%")
+                || EF.Functions.Like(x.Country, $"%{searchString}%")
+                || EF.Functions.Like(x.UserName, $"%{searchString}%")
+                || EF.Functions.Like(x.KnownAs, $"%{searchString}%")
+            );
+        }
+        //Order by
         query = userParams.OrderBy switch
         {
             "created" => query.OrderByDescending(x => x.CreatedAt),

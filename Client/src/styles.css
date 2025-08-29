@@ -94,11 +94,13 @@ button {
 .btn-info {
   color: white !important;
   background-color: #009688 !important;
+  border: none;
 }
 
 .btn-primary {
   background-color: #e91e63 !important;
   border-color: #e91e63 !important;
+  border: none;
 }
 
 .btn-info:hover {
@@ -124,4 +126,12 @@ table thead {
   color: #FFFFFF !important;            /* White text for contrast */
   font-weight: bold !important;
   text-align: left !important;
+}
+/* Change all form inputs, select border color and boxshadow*/
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: transparent !important;
+  outline: none;
+  box-shadow: 0 0 6px #C2185B !important;
 }

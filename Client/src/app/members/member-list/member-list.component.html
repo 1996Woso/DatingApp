@@ -13,9 +13,9 @@
   <!--Filters section-->
   <form #form="ngForm" (submit)="loadMembers()">
     <!--Age and Gender Filters-->
-    <div class="row g-1 mb-2">
+    <div class="row g-0 mb-2">
       <!--Age From-->
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+      <div class="col-6 col-xs-4 col-sm-4 col-md-3 col-lg-2 col-xl-2">
         <label class="form-label">Age from:</label>
         <input
           type="number"
@@ -26,7 +26,7 @@
         />
       </div>
       <!--Age To-->
-      <div class="col-6 col-sm-4 col-md-3 col-lg-2">
+      <div class="col-6 col-xs-4 col-sm-4 col-md-3 col-lg-2 col-xl-2">
         <label class="form-label">Age to:</label>
         <input
           type="number"
@@ -37,7 +37,7 @@
         />
       </div>
       <!--Gender Select-->
-      <div class="col-6 col-sm-4 col-md-4 col-lg-2">
+      <div class="col-6 col-xs-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
         <label class="form-label">Show:</label>
         <select
           name="gender"
@@ -51,6 +51,19 @@
           </option>
           }
         </select>
+      </div>
+      <!--Saerch string-->
+      <div class="col-6 col-xs-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
+        <label class="form-label">Search:</label>
+        <input
+          type="text"
+          class="form-control"
+          style="width: 100%;"
+          name="searchString"
+          placeholder="Username or KnownAs 0r Country or City"
+          [(ngModel)]="memberService.userParams().searchString"
+        >
+
       </div>
     </div>
     <!--Action Buttons-->
@@ -110,7 +123,7 @@
   <!--Members grid-->
   <div class="row g-3 mt-3">
     @for(member of memberService.paginatedResult()?.items; track member.id){
-    <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+    <div class="col-6 col-xs-4 col-sm-4 col-md-3 col-lg-2 col-xl-2">
       <app-member-card [member]="member" [showButtons]="true" />
     </div>
     }

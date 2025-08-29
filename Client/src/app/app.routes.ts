@@ -13,9 +13,11 @@ import { preventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.gu
 import { memberDetailedResolver } from './_resolvers/member-detailed.resolver';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { adminGuard } from './_guards/admin.guard';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
+    {path: 'about-us', component: AboutUsComponent},
     /**
      * Ofguard single path
      * {path: 'members', component: MemberListComponent, canActivate: [authGuard]},

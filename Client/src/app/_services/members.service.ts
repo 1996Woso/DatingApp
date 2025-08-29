@@ -38,6 +38,7 @@ export class MembersService {
     params = params.append('maxAge', this.userParams().maxAge);
     params = params.append('gender', this.userParams().gender);
     params = params.append('orderBy', this.userParams().orderBy);
+    params = params.append('searchString', this.userParams().searchString);
     return this.http
       .get<Member[]>(`${this.apiUrl}users`, { observe: 'response', params })
       .subscribe({

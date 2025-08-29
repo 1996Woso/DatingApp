@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
-import { NgClass, NgIf, TitleCasePipe } from '@angular/common';
+import { NgClass, TitleCasePipe } from '@angular/common';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -10,7 +10,6 @@ import { HasRoleDirective } from '../_directives/has-role.directive';
   selector: 'app-nav',
   imports: [
     FormsModule,
-    NgIf,
     BsDropdownModule,
     RouterLink,
     RouterLinkActive,

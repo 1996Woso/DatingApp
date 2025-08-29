@@ -7,6 +7,7 @@ export class UserParams {
     pageNumber: number = 1;
     pageSize: number = 5;
     orderBy: string = "lastActive";
+    searchString: string = "";
     
     /**
      *

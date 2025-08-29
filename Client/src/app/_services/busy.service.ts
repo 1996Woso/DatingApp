@@ -12,7 +12,7 @@ export class BusyService {
     this.spinnerService.show(undefined, {
       type: 'ball-scale-ripple-multiple',
       bdColor: 'rgba(255,255,255,0)',
-      color: '#333333'
+      color: 'rgb(184, 50, 61)'
     })
   }
 
