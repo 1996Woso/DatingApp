@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../_services/account.service';
-import { NgClass, TitleCasePipe } from '@angular/common';
+import { TitleCasePipe } from '@angular/common';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { HasRoleDirective } from '../_directives/has-role.directive';
 @Component({
@@ -12,9 +12,7 @@ import { HasRoleDirective } from '../_directives/has-role.directive';
     FormsModule,
     BsDropdownModule,
     RouterLink,
-    RouterLinkActive,
     TitleCasePipe,
-    NgClass,
     HasRoleDirective,
   ],
   templateUrl: './nav.component.html',
@@ -25,21 +23,37 @@ export class NavComponent {
   accountService = inject(AccountService);
   private router = inject(Router);
   private toastr = inject(ToastrService);
-  isMenuCollapsed: boolean = true;
- 
-  toggleMenu() {
-    this.isMenuCollapsed = !this.isMenuCollapsed;
+  isHamMenuActive: boolean = false;
+  currentRoute: string = '';
+
+  constructor() {
+    this.router.events.subscribe(() => {
+      this.currentRoute = this.router.url;
+    });
+  }
+  toggleHamMenu() {
+    this.isHamMenuActive = !this.isHamMenuActive;
+  }
+  navigateByUrl(url: string) {
+    this.isHamMenuActive = false;
+    this.router.navigateByUrl(url);
+  }
+  closeHamMenu() {
+    this.isHamMenuActive = false;
+  }
+  isRouteActive(route: string) {
+    return this.currentRoute === route;
   }
 
   Login() {
     this.accountService.Login(this.model).subscribe({
       next: (response) => {
+        this.isHamMenuActive = false;
         this.router.navigateByUrl('/members');
-        console.log(response);
       },
+
       error: (error) => {
         this.toastr.error(error.error);
-        // console.log(error);
       },
       complete: () => {
         this.toastr.success("You've successfully logged in!");
@@ -49,6 +63,7 @@ export class NavComponent {
 
   Logout() {
     this.accountService.Logout();
+    this.isHamMenuActive = false;
     this.router.navigateByUrl('/');
     this.toastr.success("You've successfully logged out!");
   }

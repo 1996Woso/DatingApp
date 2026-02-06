@@ -9,28 +9,43 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
 
 // Add services to the container.
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
 //When Client and API are not from the same origin e.g localhost:5002 and localhost:5001
-builder.Services.AddCors();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowNetlify", policy =>
+    {
+        policy.WithOrigins(allowedOrigins!)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+}
+);
 var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseMiddleware<ExceptionMiddleware>();
-app.UseCors(x => x.AllowAnyHeader()
-  .AllowAnyMethod()
-  .AllowCredentials()
-  .WithOrigins("http://localhost:4200", "https://localhost:4200")
-  // .AllowAnyOrigin()
+// app.UseCors(x => x.AllowAnyHeader()
+//   .AllowAnyMethod()
+//   .AllowCredentials()
+//   .WithOrigins("http://localhost:4200", "https://localhost:4200")
+//   // .AllowAnyOrigin()
 
-);
+// );
+app.UseHttpsRedirection();
+app.UseCors("AllowNetlify");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHub<PresenceHub>("hubs/presence");
 app.MapHub<MessageHub>("hubs/message");
+
+
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
@@ -42,7 +57,7 @@ try
   var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
   await context.Database.MigrateAsync();
   await context.Database.ExecuteSqlRawAsync("Delete From [Connections]");//When app restart
-  await Seed.SeedUsers(userManager, roleManager);
+  // await Seed.SeedUsers(userManager, roleManager);
 }
 catch (Exception ex)
 {

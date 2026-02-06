@@ -13,7 +13,7 @@ public class PresenceTracker
         {
             if (OnlineUsers.ContainsKey(username))
             {
-                OnlineUsers[username].Add(connectionId);
+                OnlineUsers[username].Add(connectionId);//Gets the list for username and add connectionId to the list
             }
             else
             {
@@ -33,7 +33,6 @@ public class PresenceTracker
             if (!OnlineUsers.ContainsKey(username)) return Task.FromResult(isOffline);
 
             OnlineUsers[username].Remove(connectionId);
-
             if (OnlineUsers[username].Count == 0)
             {
                 OnlineUsers.Remove(username);

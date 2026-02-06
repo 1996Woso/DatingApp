@@ -47,9 +47,20 @@
         (fileOver)="fileOverBase($event)"
         [uploader]="uploader"
         class="card bg-faded p-5 text-center my-drop-zone"
+        (click)="fileInput.click()"
       >
-        <i class="fa fa-upload fa-3x"></i>
-        Drop photos here
+        <!-- <i class="fa fa-upload fa-3x"></i> -->
+        <i class="bi bi-images"></i>
+       <p class="fw-bold"> Drop or click to select photos </p>
+        <input 
+          type="file"
+          ng2FileSelect
+          multiple
+          accept="image/*"
+          [uploader]="uploader"
+          hidden
+          #fileInput
+        />
       </div>
     </div>
 

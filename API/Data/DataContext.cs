@@ -5,16 +5,17 @@ using API.Models.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API.Data;
 
 public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, AppRole
 , int, IdentityUserClaim<int>, AppUserRole, IdentityUserLogin<int>, IdentityRoleClaim<int>
-,IdentityUserToken<int>>(options)
-{ 
+, IdentityUserToken<int>>(options)
+{
     public DbSet<UserLike> Likes { get; set; }
     public DbSet<Message> Messages { get; set; }
-    
+
     public DbSet<Group> Groups { get; set; }
     public DbSet<Connection> Connections { get; set; }
     public DbSet<Photo> Photos { get; set; }
@@ -59,7 +60,5 @@ public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, 
             .HasOne(x => x.Sender)
             .WithMany(x => x.MessagesSent)
             .OnDelete(DeleteBehavior.Restrict);
-
     }
 }
- 

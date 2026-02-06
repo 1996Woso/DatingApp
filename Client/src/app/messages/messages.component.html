@@ -30,17 +30,17 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 table-scroll">
       @if (!messageService.paginatedResult()?.items || messageService.paginatedResult()?.items?.length === 0) {
       <h5>No messages</h5>
       }@else {
-      <table class="table table-hover mt-3" style="cursor: pointer">
+      <table class="table-bordered data-table mt-3" style="cursor: pointer">
         <thead>
           <tr>
-            <th style="max-width: 75%">Message</th>
-            <th style="max-width: 10%">From / To</th>
-            <th style="max-width: 10%">Sent / Received</th>
-            <th style="max-width: 5%">Action</th>
+            <th>Message</th>
+            <th>From / To</th>
+            <th>Sent / Received</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody class="align-middle">
@@ -88,7 +88,7 @@
         "
         (pageChanged)="pageChanged($event)"
         [(ngModel)]="messageService.paginatedResult()!.pagination!.currentPage"
-        [maxSize]="10"
+        [maxSize]="5"
         previousText="&lsaquo;"
         nextText="&rsaquo;"
         firstText="&laquo;"

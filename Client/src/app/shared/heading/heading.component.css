@@ -1,0 +1,42 @@
+.heading {
+ background-color: rgba(53, 7, 26, 0.859);
+  border-radius: 0.1rem;
+  border-left: 8px solid rgb(27, 26, 26);
+  transition: transform 0.9s ease-in-out;
+}
+
+/* .heading:hover {
+ background-color: rgba(53, 7, 26, 0.859);
+  cursor: pointer;
+  border-left: 8px solid rgb(27, 26, 26);
+} */
+
+.heading-sub {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: rgb(90, 76, 76);
+}
+
+.heading-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: #e5dcdc;
+  transition: transform 0.9s ease-in-out;
+}
+
+.heading-title:hover {
+    color: white;
+    transform: translateY(-4px);
+}
+@media (max-width: 768px) {
+  .heading-title {
+    font-size: 1rem;
+  }
+
+  .heading-sub {
+    font-size: 0.8rem !important;
+  }
+}

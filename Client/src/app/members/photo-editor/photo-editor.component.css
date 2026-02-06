@@ -1,6 +1,6 @@
-.nv-file-over {
+/* .nv-file-over {
     border: dotted 3px rgb(53, 53, 133);
-}
+} */
 .img-wrapper {
     display: inline-block;
     position: relative;
@@ -16,4 +16,17 @@
   border-radius: 4px;
   font-weight: bold;
   font-size: 0.5rem;
+}
+.my-drop-zone {
+  cursor: pointer;
+  border: 2px dashed #ccc;
+  transition: all 0.2s ease;
+}
+
+.nv-file-over {
+  border-color: #0d6efd;
+  background-color: #f0f7ff;
+}
+.bi-images {
+  font-size: 2.5rem;
 }

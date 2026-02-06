@@ -17,18 +17,18 @@
 
 .member-icons {
     position: absolute;
-    bottom: -30%;
+    bottom: 0;
     left: 0;
     right: 0;
     margin-right: auto;
     margin-left: auto;
-    opacity: 0;
-}
-
-.card-img-wrapper:hover .member-icons {
-    bottom: 0;
     opacity: 1;
 }
+
+/* .card-img-wrapper:hover .member-icons {
+    bottom: 0;
+    opacity: 1;
+} */
 
 .animate {
     transition: all 0.3s ease-in-out;
@@ -36,14 +36,17 @@
 p {
     font-size: small;
 }
-button {
+/* button {
     border-radius: 50%;
     background-color: rgb(239, 233, 239);
     border-color:  rgb(184, 50, 61);
+} */
+.bi {
+    font-size: 1.2rem;
 }
 button:hover {
     background-color: rgb(239, 233, 239);
-    border-color:  rgb(184, 50, 61);
+    /* border-color:  rgb(184, 50, 61); */
     transform: scale(1.09);
     transition: 0.5s ease-in-out;
 }

@@ -1,61 +1,185 @@
-<nav class="navbar navbar-expand-md navbar-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand home-hover" routerLink="/" routerLinkActive="active">
-      <i class="bi bi-house"></i>
-    </a>
-    <!--Angular controlled hamburge button-->
-    <button class="navbar-toggler" 
-        type="button" 
-        (click)="toggleMenu()"
+<header>
+  <nav>
+    <ul>
+      <li>
+        <a routerLink="/" class="btn" [class.active-border]="isRouteActive('/')"
+          ><i class="bi bi-house"></i> Home</a
         >
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      </li>
+      @if (accountService.currentUser()) {
+        <li>
+          <a
+            routerLink="/members"
+            class="btn"
+            [class.active-border]="isRouteActive('/members')"
+          >
+            <i class="bi bi-people-fill"></i> Matches</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/lists"
+            class="btn"
+            [class.active-border]="isRouteActive('/lists')"
+          >
+            <i class="bi bi-list"></i> Lists</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/messages"
+            class="btn"
+            [class.active-border]="isRouteActive('/messages')"
+            ><i class="bi bi-chat-dots-fill"></i> Messages</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin"
+            class="btn"
+            [class.active-border]="isRouteActive('/admin')"
+            ><i class="bi bi-person-fill-gear"></i> Admin</a
+          >
+        </li>
+        <li>
+          <a class="btn" (click)="Logout()">
+            <i class="bi bi-escape"></i> Logout</a
+          >
+        </li>
+      }
+    </ul>
+  </nav>
+  @if (accountService.currentUser()) {
+    <div dropdown class="dropdown">
+      <img
+        class="me-2 rounded-circle"
+        src="{{
+          accountService.currentUser()?.photoUrl || accountService.defaultImage
+        }}"
+        alt="{{ accountService.currentUser()?.username + '`s main image' }}"
+      />
+      <button
+        dropdownToggle
+        class="btn dropdown-toggle text-light text-decoration-none"
+      >
+        Hello, {{ accountService.currentUser()?.knownAs | titlecase }}
+      </button>
+      <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
+        <a routerLink="/member/edit" class="dropdown-item text-dark">
+          <i class="bi bi-pencil-square"></i> Edit Profile
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-dark" (click)="Logout()">
+          <i class="bi bi-escape"></i> Logout
+        </a>
+      </div>
+    </div>
+  }
+  @if (!accountService.currentUser()) {
+    <!-- *ngIf="!accountService.currentUser()"(put it inside the form) -->
+    <form
+      #lognForm="ngForm"
+      (ngSubmit)="Login()"
+      class="d-flex gap-2"
+      autocomplete="off"
+    >
+      <input
+        class="form-control me-2"
+        placeholder="Username"
+        name="username"
+        [(ngModel)]="model.username"
+      />
+      <input
+        class="form-control me-2"
+        placeholder="Password"
+        type="password"
+        name="password"
+        [(ngModel)]="model.password"
+      />
+      <button class="btn btn-info text-start" type="submit">
+        <!-- <i class="bi bi-person-fill-up"></i>  -->
+        Login
+      </button>
+    </form>
+  }
+</header>
 
-    <!--Collapsible content with Angular ngClass-->
-    <div class="navbar-collapse" [ngClass]="{ collapse: isMenuCollapsed }">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0 gap-md-2 gap-lg-6 gap-xl-6">
-        @if(accountService.currentUser()){
-        <li class="nav-item">
-          <a routerLink="/members" routerLinkActive="active" class="nav-link">
-            <i class="bi bi-people-fill"></i> Matches
-          </a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/lists" routerLinkActive="active" class="nav-link">
-            <i class="bi bi-list"></i> Lists
-          </a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/messages" routerLinkActive="active" class="nav-link">
-            <i class="bi bi-chat-dots-fill"></i> Messages
-          </a>
-        </li>
-          <li *appHasRole="['Admin', 'Moderator']" class="nav-item">
-          <a routerLink="/admin" routerLinkActive="active" class="nav-link">
-            <i class="bi bi-person-fill-gear"></i> Admin
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" (click)="Logout()">
-            <i class="bi bi-escape"></i> Logout
-          </a>
-        </li> }
-      </ul>
-      @if(accountService.currentUser()){
+<!--For small screens-->
+<div #offScreenMenu class="off-screen-menu" [class.active]="isHamMenuActive">
+  <ul>
+     <li style="height: 1rem"></li>
+      <li>
+        <a
+          routerLink="/"
+          class="btn"
+          [class.active-border]="isRouteActive('/')"
+          (click)="closeHamMenu()"
+          ><i class="bi bi-house"></i> Home</a
+        >
+      </li>
+    @if (accountService.currentUser()) {
+      <li>
+        <a
+          routerLink="/members"
+          class="btn"
+          [class.active-border]="isRouteActive('/members')"
+          (click)="closeHamMenu()"
+        >
+          <i class="bi bi-people-fill"></i> Matches</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/lists"
+          class="btn"
+          [class.active-border]="isRouteActive('/lists')"
+          (click)="closeHamMenu()"
+        >
+          <i class="bi bi-list"></i> Lists</a
+        >
+      </li>
+      <li>
+        <a
+          routerLink="/messages"
+          class="btn"
+          [class.active-border]="isRouteActive('/messages')"
+          (click)="closeHamMenu()"
+          ><i class="bi bi-chat-dots-fill"></i> Messages</a
+        >
+      </li>
+      <li *appHasRole="['Admin', 'Moderator']">
+        <a
+          routerLink="/admin"
+          class="btn"
+          [class.active-border]="isRouteActive('/admin')"
+          (click)="closeHamMenu()"
+          ><i class="bi bi-person-fill-gear"></i> Admin</a
+        >
+      </li>
+      <li>
+        <a class="btn" (click)="Logout()">
+          <i class="bi bi-escape"></i> Logout</a
+        >
+      </li>
+    }
+    @if (accountService.currentUser()) {
       <div dropdown class="dropdown">
         <img
           class="me-2 rounded-circle"
-          src="{{accountService.currentUser()?.photoUrl || accountService.defaultImage}}"
+          src="{{
+            accountService.currentUser()?.photoUrl ||
+              accountService.defaultImage
+          }}"
           alt="{{ accountService.currentUser()?.username + '`s main image' }}"
         />
         <button
           dropdownToggle
           class="btn dropdown-toggle text-light text-decoration-none"
         >
-          Hello, {{ accountService.currentUser()?.knownAs| titlecase }}
+          Hello, {{ accountService.currentUser()?.knownAs | titlecase }}
         </button>
-        <div *dropdownMenu class="dropdown-menu dropdown-menu-end">
-          <a routerLink="/member/edit" class="dropdown-item text-dark">
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-md-end">
+          <a class="dropdown-item text-dark" (click)="navigateByUrl('/member/edit')">
             <i class="bi bi-pencil-square"></i> Edit Profile
           </a>
           <div class="dropdown-divider"></div>
@@ -64,33 +188,49 @@
           </a>
         </div>
       </div>
-      } @if(!accountService.currentUser()){
-      <!-- *ngIf="!accountService.currentUser()"(put it inside the form) -->
-      <form
-        #lognForm="ngForm"
-        (ngSubmit)="Login()"
-        class="d-flex gap-2"
-        autocomplete="off"
-      >
-        <input
-          class="form-control me-2"
-          placeholder="Username"
-          name="username"
-          [(ngModel)]="model.username"
-        />
-        <input
-          class="form-control me-2"
-          placeholder="Password"
-          type="password"
-          name="password"
-          [(ngModel)]="model.password"
-        />
-        <button class="btn btn-info text-start" type="submit">
-          <!-- <i class="bi bi-person-fill-up"></i>  -->
-          Login
-        </button>
-      </form>
+    }
+    <li>
+      @if (!accountService.currentUser()) {
+        <!-- *ngIf="!accountService.currentUser()"(put it inside the form) -->
+        <form
+          #lognForm="ngForm"
+          (ngSubmit)="Login()"
+          class="d-flex gap-2"
+          autocomplete="off"
+        >
+          <input
+            class="form-control me-2"
+            placeholder="Username"
+            name="username"
+            [(ngModel)]="model.username"
+          />
+          <input
+            class="form-control me-2"
+            placeholder="Password"
+            type="password"
+            name="password"
+            [(ngModel)]="model.password"
+          />
+          <button class="btn btn-info text-start" type="submit">
+            <!-- <i class="bi bi-person-fill-up"></i>  -->
+            Login
+          </button>
+        </form>
       }
-    </div>
+    </li>
+  </ul>
+</div>
+
+<!--Hamburger button-->
+<nav>
+  <div
+    #hamMenu
+    class="ham-menu"
+    [class.active]="isHamMenuActive"
+    (click)="toggleHamMenu()"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
 </nav>

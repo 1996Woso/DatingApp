@@ -9,10 +9,10 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class ConfirmDialogComponent {
   bsModalRef = inject(BsModalRef);
-  title = '';
-  message = '';
-  btnOkText = '';
-  btnCancelText = '';
+  title = 'Unsaved Changes';
+  message = 'Changes you made may not be saved.';
+  btnOkText = 'Ok';
+  btnCancelText = 'Cancel';
   result = false;
 
   confirm() {

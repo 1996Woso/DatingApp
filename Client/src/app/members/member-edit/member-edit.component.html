@@ -1,12 +1,9 @@
 @if (member) {
 <div class="container-fluid">
   <!--Header row-->
-  <div class="row">
-    <div class="col-12">
-      <h3 class="text-center">{{ member.knownAs }}'s profile</h3>
-      <hr />
-    </div>
-  </div>
+  <app-heading>
+    <span heading-title>{{ member.knownAs }}'s profile</span>
+  </app-heading>
 
   <!--Alert-->
   <div class="row mb-3">
@@ -14,7 +11,7 @@
       @if(editForm.dirty) {
       <div class="alert alert-info">
         <p class="mb-0">
-          <b>Information:</b> You have made changes. Any unsaved changes will be
+          <i class="bi bi-info-circle-fill"></i> You have made changes. Any unsaved changes will be
           lost
         </p>
       </div>

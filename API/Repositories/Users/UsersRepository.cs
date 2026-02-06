@@ -74,15 +74,23 @@ public class UsersRepository : IUsersRepository
         var maxDoB = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
         query = query.Where(x => x.DateOfBirth >= minDoB && x.DateOfBirth <= maxDoB);
         //Search by filtering
-        var searchString = userParams.SearchString;
-        if (!string.IsNullOrEmpty(searchString))
+        if (!string.IsNullOrEmpty(userParams.SearchString))
         {
-
-            query = query.Where(x =>
-                EF.Functions.Like(x.City, $"%{searchString}%")
-                || EF.Functions.Like(x.Country, $"%{searchString}%")
-                || EF.Functions.Like(x.UserName, $"%{searchString}%")
-                || EF.Functions.Like(x.KnownAs, $"%{searchString}%")
+            var searchString = userParams.SearchString.Trim();
+            var collate = "SQL_Latin1_General00_CP1_CI_AI";
+            query = query.Where(x => 
+                EF.Functions.Like(
+                    EF.Functions.Collate(x.City, collate), $"%{searchString}%"
+                ) ||
+                 EF.Functions.Like(
+                    EF.Functions.Collate(x.Country, collate), $"%{searchString}%"
+                ) ||
+                 EF.Functions.Like(
+                    EF.Functions.Collate(x.UserName, collate), $"%{searchString}%"
+                ) ||
+                 EF.Functions.Like(
+                    EF.Functions.Collate(x.KnownAs, collate), $"%{searchString}%"
+                )
             );
         }
         //Order by

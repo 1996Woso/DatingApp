@@ -13,19 +13,13 @@ namespace API.Repositories.Account;
 
 public class AccountRepository : IAccountRepository
 {
-    private readonly DataContext dataContext;
-    private readonly IUsersRepository usersRepository;
     private readonly IMapper mapper;
     private readonly UserManager<AppUser> userManager;
 
-    public AccountRepository(DataContext dataContext
-    , IUsersRepository usersRepository
-    ,IMapper mapper
-    ,UserManager<AppUser> userManager
+    public AccountRepository(IMapper mapper
+    , UserManager<AppUser> userManager
     )
     {
-        this.dataContext = dataContext;
-        this.usersRepository = usersRepository;
         this.mapper = mapper;
         this.userManager = userManager;
     }

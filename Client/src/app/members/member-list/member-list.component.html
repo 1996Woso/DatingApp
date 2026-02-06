@@ -13,14 +13,13 @@
   <!--Filters section-->
   <form #form="ngForm" (submit)="loadMembers()">
     <!--Age and Gender Filters-->
-    <div class="row g-0 mb-2">
+    <div class="row g-2 mb-2">
       <!--Age From-->
       <div class="col-6 col-xs-4 col-sm-4 col-md-3 col-lg-2 col-xl-2">
         <label class="form-label">Age from:</label>
         <input
           type="number"
-          class="form-control"
-          style="width: 70px"
+          class="form-control w-100"
           name="minAge"
           [(ngModel)]="memberService.userParams().minAge"
         />
@@ -30,8 +29,7 @@
         <label class="form-label">Age to:</label>
         <input
           type="number"
-          class="form-control"
-          style="width: 70px"
+          class="form-control w-100"
           name="maxAge"
           [(ngModel)]="memberService.userParams().maxAge"
         />
@@ -41,8 +39,7 @@
         <label class="form-label">Show:</label>
         <select
           name="gender"
-          class="form-select"
-          style="width: 130px"
+          class="form-select w-100"
           [(ngModel)]="memberService.userParams().gender"
         >
           @for (gender of genderList; track gender.value) {
@@ -57,8 +54,7 @@
         <label class="form-label">Search:</label>
         <input
           type="text"
-          class="form-control"
-          style="width: 100%;"
+          class="form-control w-100"
           name="searchString"
           placeholder="Username or KnownAs 0r Country or City"
           [(ngModel)]="memberService.userParams().searchString"
@@ -67,7 +63,7 @@
       </div>
     </div>
     <!--Action Buttons-->
-    <div class="row">
+    <div class="row g-2">
       <div class="col-6 col-sm-6 col-md-4 col-lg-2 col-xl-2 mb-2">
         <button class="btn btn-primary w-100" type="submit">
           <i class="bi bi-funnel"></i> Apply filters
@@ -130,7 +126,7 @@
   </div>
 
   <!--Pagination-->
-  @if (memberService.paginatedResult()?.pagination) {
+  @if (memberService.paginatedResult()?.pagination?.totalItems) {
   <div class="row mt-4">
     <div class="col-12 d-flex justify-content-center">
       <pagination
@@ -141,7 +137,7 @@
         "
         (pageChanged)="pageChanged($event)"
         [(ngModel)]="memberService.paginatedResult()!.pagination!.currentPage"
-        [maxSize]="10"
+        [maxSize]="5"
         previousText="&lsaquo;"
         nextText="&rsaquo;"
         firstText="&laquo;"
@@ -150,5 +146,9 @@
       </pagination>
     </div>
   </div>
+  } @else {
+    <div class="alert alert-info">
+      <i class="bi bi-info-circle-fill"></i> No members found.
+    </div>
   }
 </div>

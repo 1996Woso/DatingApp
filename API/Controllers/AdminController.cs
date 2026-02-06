@@ -35,7 +35,12 @@ namespace API.Controllers
 
             if (!string.IsNullOrEmpty(adminParams.Username))
             {
-                query = query.Where(x => EF.Functions.Like(x.Username, $"%{adminParams.Username}%"));
+                var collate = "SQL_Latin1_General_CP1_CI_AI";
+                query = query.Where(x => 
+                    EF.Functions.Like(
+                        EF.Functions.Collate(x.Username, collate), $"%{adminParams.Username.Trim()}%"
+                    )
+                );
             }
 
             var users = await PagedList<dynamic>.CreateAsync(query,adminParams.PageNumber, adminParams.PageSize);

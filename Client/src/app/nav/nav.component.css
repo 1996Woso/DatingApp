@@ -2,30 +2,167 @@
 .dropdown-item {
   cursor: pointer;
 }
+.dropdown-item {
+  background-color: transparent !important;
+}
+
 img {
   max-height: 50px;
   max-width: 50px;
   display: inline;
 }
-a {
-  border-radius: 0.4rem;
-  transition: background-color 0.3s ease;
-  font-size: 1rem !important;
+
+header {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+  padding: 1.5rem 5%;
+  background-color: rgb(184, 50, 61);
+}
+ul {
+  list-style-type: none;
+}
+
+.active-border {
   color: white;
+  text-decoration: none;
+  font-weight: bold;
+  border: 2px solid rgb(28, 26, 26);
+}
+
+header nav ul {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: rgba(255, 255, 255, 0.7);
   font-weight: bold;
 }
 
-a:hover ,.dark-text:hover {
-  background-color: white;
-  color: #009688 !important;
-  transform: scale(1.02);
+a:hover {
+  transform: scale(1.09);
+  color: white;
   transition: 0.5s ease-in-out;
 }
-nav {
-  background-color: rgb(184, 50, 61);
-  box-shadow: 0 0 8px rgb(76, 76, 76);
+
+.bi {
+  color: inherit;
+  transition: color 0.3s ease;
 }
-.home-hover:hover {
-  background-color: transparent !important;
-  color: white !important;
+
+p {
+  font-weight: bold;
+  font-size: 1.28rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: "Times New Roman", Times, serif;
+  cursor: pointer;
+  padding: 2px;
+}
+
+p:hover {
+  color: white;
+  transform: scale(1.09);
+  transition: 0.5s ease-in-out;
+}
+
+.off-screen-menu {
+  background-color: rgb(184, 50, 61);
+  height: auto;
+  width: 100%;
+  /* max-width: 250px; */
+  position: fixed;
+  top: -100%;
+  left: 0;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+  font-size: 3rem;
+  transition: 0.3s ease-in-out;
+  z-index: 100;
+}
+
+.off-screen-menu.active {
+  top: 0;
+}
+
+.ham-menu {
+  display: none;
+  height: 35px;
+  width: 35px;
+  margin-left: 5px;
+  position: relative;
+  z-index: 100;
+}
+
+.ham-menu span {
+  height: 5px;
+  width: 100%;
+  background-color: gray;
+  border-radius: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.06s ease;
+}
+
+.ham-menu span:nth-child(1) {
+  top: 25%;
+}
+
+.ham-menu span:nth-child(3) {
+  top: 75%;
+}
+
+.ham-menu.active span:nth-child(1) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.ham-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.ham-menu.active span:nth-child(3) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.ham-menu,
+.off-screen-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  header {
+    display: none; /* hide normal nav */
+  }
+
+  .ham-menu {
+    display: block; /* show hamburger */
+  }
+
+  .off-screen-menu {
+    display: flex; /* keep hidden off-screen until activated */
+  }
+}
+
+@media (max-width: 1280px) {
+  header nav ul {
+    gap: 0.4rem;
+  }
+  .btn {
+    font-size: 0.8rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
 }

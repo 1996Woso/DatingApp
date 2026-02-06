@@ -1,3 +1,6 @@
 button {
-    width: 8em;
+  width: 8em;
+}
+.search-input {
+  border-radius: 0rem !important;
 }

@@ -43,7 +43,7 @@ public class MessageHub(IUnitOfWork unitOfWork, IMapper mapper, IHubContext<Pres
     public async Task SendMessage(CreateMessageDTO createMessageDTO)
     {
         var username = Context.User?.GetUsername() ?? throw new HubException("Cannot get the user");
-        if (username == createMessageDTO.RecipientUsername.ToLower())
+        if (username.Equals(createMessageDTO.RecipientUsername, StringComparison.CurrentCultureIgnoreCase))
             throw new Exception("You cannot message yourself");
         var sender = await unitOfWork.UsersRepository.GetUserByUsernameAsync(username);
         var recipient = await unitOfWork.UsersRepository.GetUserByUsernameAsync(createMessageDTO.RecipientUsername);

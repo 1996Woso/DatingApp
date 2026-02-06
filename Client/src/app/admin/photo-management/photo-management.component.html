@@ -2,7 +2,9 @@
   <div class="row">
     @if (!photoService.paginatedResult()?.items ||
     photoService.paginatedResult()?.items?.length === 0) {
-    <h5>No Photos</h5>
+     <div class="alert alert-info">
+      <i class="bi bi-info-circle-fill"></i> No photos.
+    </div>
     } @for (photo of photoService.paginatedResult()?.items; track photo.id) {
     <div class="col-12 col-md-3 col-sm-4 col-lg-2 col-xl-2">
       <img src="{{ photo.url }}" alt="users photo" class="img-thumbnail mb-1" />

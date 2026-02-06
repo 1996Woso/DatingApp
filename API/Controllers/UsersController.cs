@@ -22,8 +22,6 @@ public class UsersController(IUnitOfWork unitOfWork, IMapper mapper) : BaseApiCo
     {
         userParams.CurrentUsername = User.GetUsername();
         var users = await unitOfWork.UsersRepository.GetUsersDtoAsync(userParams);
-        if (!users!.Any()) return NotFound("Users not found.");
-
         Response.AddPaginationHeader(users);
         return Ok(users);
     }

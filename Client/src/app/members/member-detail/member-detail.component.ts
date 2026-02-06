@@ -20,6 +20,7 @@ import { MemberMessagesComponent } from '../member-messages/member-messages.comp
 import { MessageService } from '../../_services/message.service';
 import { AccountService } from '../../_services/account.service';
 import { HubConnectionState } from '@microsoft/signalr';
+import { HeadingComponent } from "../../shared/heading/heading.component";
 
 @Component({
   selector: 'app-member-detail',
@@ -30,7 +31,8 @@ import { HubConnectionState } from '@microsoft/signalr';
     DatePipe,
     MemberCardComponent,
     MemberMessagesComponent,
-  ],
+    HeadingComponent
+],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css',
 })

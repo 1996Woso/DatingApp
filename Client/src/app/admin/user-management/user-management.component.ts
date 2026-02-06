@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { PageChangedEvent, PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { PagedListServiceService } from '../../_services/paged-list-service.service';
 
 @Component({
   selector: 'app-user-management',
@@ -15,12 +16,16 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
   styleUrl: './user-management.component.css',
 })
 export class UserManagementComponent implements OnInit {
+  pageSizeList: number[] = [1, 2, 5, 10, 15, 20];
+  pages: string | undefined;
+  items: string | undefined;
   adminService = inject(AdminService);
   private modalService = inject(BsModalService);
   private toastr = inject(ToastrService);
   users: User[] = [];
   bsModalRef: BsModalRef<RolesModalComponent> =
     new BsModalRef<RolesModalComponent>();
+  pagedListService = inject(PagedListServiceService);
 
   ngOnInit(): void {
     if (!this.adminService.paginatedResult()) this.getUsersWithRoles();
@@ -60,7 +65,25 @@ export class UserManagementComponent implements OnInit {
   }
 
   getUsersWithRoles() {
-    this.adminService.getUserWithRoles();
+    this.adminService.getUserWithRoles().subscribe({
+      next: (result) => {
+        const pagination = result.pagination;
+        this.items = this.pagedListService.items(
+          pagination!.itemsPerPage,
+          pagination!.totalPages,
+          pagination!.totalItems,
+          pagination!.currentPage
+        );
+
+        this.pages = this.pagedListService.pages(
+          pagination!.currentPage,
+          pagination!.totalPages
+        );
+
+        // Update paginatedResult signal if needed
+        this.adminService.paginatedResult.set(result);
+      },
+    });
   }
 
   pageChanged(event: any) {

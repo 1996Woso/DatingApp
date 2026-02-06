@@ -128,7 +128,7 @@ export class RegisterComponent implements OnInit {
         this.validationErrors = error;
       },
       complete: () => {
-        this.toastr.success('You\'ve successfully registered!');
+        this.toastr.success('You\'ve beeb registered successfully!');
       }
     });
   }

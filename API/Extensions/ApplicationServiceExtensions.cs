@@ -18,10 +18,15 @@ public static class ApplicationServiceExtensions
         , IConfiguration configuration
     )
     {
+        var connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         services.AddControllers();
+        // services.AddDbContext<DataContext>(opt =>
+        // {
+        //     opt.UseSqlite(connectionString);
+        // });
         services.AddDbContext<DataContext>(opt =>
         {
-            opt.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
+            opt.UseSqlServer(connectionString);
         });
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
@@ -40,3 +45,4 @@ public static class ApplicationServiceExtensions
         return services;
     }
 }
+

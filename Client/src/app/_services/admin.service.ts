@@ -5,6 +5,7 @@ import { User } from '../_models/user';
 import { setPaginatedResponse, setPaginationHeaders } from './paginationHelper';
 import { PaginatedResult } from '../_models/pagination';
 import { AdminParams } from '../_models/admin-params';
+import { map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,22 +21,35 @@ export class AdminService {
     this.adminParams.set(new AdminParams());
   }
 
-  getUserWithRoles() {
-    const response = this.memberCache.get(Object.values(this.adminParams()));
-    if (response) return setPaginatedResponse(response, this.paginatedResult);
+  getUserWithRoles(): Observable<PaginatedResult<User[]>> {
+
+     const cacheKey = Object.values(this.adminParams()).join('-');
+    const cached = this.memberCache.get(cacheKey);
+    if (cached) {
+      return of(cached);
+    }
     let params = setPaginationHeaders(
       this.adminParams().pageNumber,
       this.adminParams().pageSize
     );
 
     params = params.append('username',  this.adminParams().username);
-    return this.http.get<User[]>(`${this.apiUrl}admin/users-with-roles`, {observe: 'response', params})
-    .subscribe({
-      next: (response) => {
-        setPaginatedResponse(response, this.paginatedResult);
-        this.memberCache.set(Object.values(this.adminParams()),response);
-      },
-    });
+
+   return this.http
+      .get<User[]>(`${this.apiUrl}admin/users-with-roles`, {
+        observe: 'response',
+        params,
+      })
+      .pipe(
+        map((response) => {
+          const paginated: PaginatedResult<User[]> = {
+            items: response.body!,
+            pagination: JSON.parse(response.headers.get('Pagination')!),
+          };
+          this.memberCache.set(cacheKey, paginated);
+          return paginated;
+        })
+      );
   }
 
   updateUserRoles(username: string, roles: string[]) {

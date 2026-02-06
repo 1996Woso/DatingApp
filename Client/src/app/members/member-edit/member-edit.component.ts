@@ -16,10 +16,11 @@ import { PhotoEditorComponent } from "../photo-editor/photo-editor.component";
 import { DatePipe } from '@angular/common';
 import { TimeagoModule } from 'ngx-timeago';
 import { MemberCardComponent } from "../member-card/member-card.component";
+import { HeadingComponent } from "../../shared/heading/heading.component";
 
 @Component({
   selector: 'app-member-edit',
-  imports: [TabsModule, FormsModule, PhotoEditorComponent, DatePipe, TimeagoModule, MemberCardComponent],
+  imports: [TabsModule, FormsModule, PhotoEditorComponent, DatePipe, TimeagoModule, MemberCardComponent, HeadingComponent],
   templateUrl: './member-edit.component.html',
   styleUrl: './member-edit.component.css',
 })
@@ -33,6 +34,7 @@ export class MemberEditComponent implements OnInit {
 
   @HostListener('window:beforeunload', ['$event']) notify($event: any) {
     if (this.editForm()?.dirty) {
+
       $event.returnValue = true;
     }
   }

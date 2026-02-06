@@ -16,8 +16,14 @@ button {
 
 .nav-tabs > li.open,
 .member-tabset > .nav-tabs > li:hover {
-  border-bottom: 4px solid rgba(184, 50, 61,0.4);;
+  border-bottom: 4px solid rgba(184, 50, 61,0.4);
 }
+
+.member-tabset > .nav-tabs > li.active {
+  border-bottom: 4px solid rgb(184, 50, 61);;
+  position: relative;
+}
+
 
 .member-tabset > .nav-tabs > li.open > a,
 .member-tabset > .nav-tabs > li:hover > a {
@@ -34,11 +40,6 @@ button {
 .member-tabset > .nav-tabs > li.open .dropdown-menu,
 .member-tabset > .nav-tabs > li:hover .dropdown-menu {
   margin-top: 0px;
-}
-
-.member-tabset > .nav-tabs > li.active {
-  border-bottom: 4px solid rgb(184, 50, 61);;
-  position: relative;
 }
 
 .member-tabset > .nav-tabs > li.active > a {
@@ -78,7 +79,6 @@ button {
   left: 100%;
   transform: translateX(-50%);
   white-space: nowrap;
-
   opacity: 0;
   transition: opacity 0.3s ease;
 }
@@ -112,14 +112,29 @@ button {
   background-color: #eb3672 !important;
   border-color: #e91e63 !important;
 }
+/* Table styles*/
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.data-table {
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+  padding: 10px 14px;
+  white-space: nowrap;
+  text-align: left;
+}
 
 .table-header-colour {
   background-color: rgb(184, 50, 61) !important;
 }
-
-/* thead {
-  background-color: rgb(184, 50, 61) !important;
-} */
 
 table thead {
   background-color: #C2185B !important; /* Deep Rose */
@@ -134,4 +149,38 @@ select:focus {
   border-color: transparent !important;
   outline: none;
   box-shadow: 0 0 6px #C2185B !important;
+}
+.form-label {
+  font-weight: bold;
+  color: #222323;
+  font-size: 0.85rem;
+}
+
+.form-select,
+.form-control {
+  border: 2px solid #7d7b73;
+  border-radius: 0.4rem;
+  background-color: #fff;
+  color: #333;
+  font-size: 0.8rem;
+  /* font-family: "Courier New", Courier, monospace;  */
+  transition: all 0.2s ease-in-out;
+}
+
+.form-select:hover,
+.form-control:hover {
+  border-color: #222323;;
+  box-shadow: 0 0 6px rgba(157, 147, 115, 0.4);
+  cursor: pointer;
+}
+.form-control:focus,
+.form-select:focus {
+  outline: auto;
+  border-color:  #222323;
+  box-shadow: 0 0 8px rgba(157, 147, 115, 0.4);
+}
+
+/*pagination style*/
+.pagination {
+  font-weight: 600;
 }

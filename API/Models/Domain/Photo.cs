@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using API.Models.DTOs;
 
 namespace API.Models.Domain;
@@ -14,7 +15,7 @@ public class Photo
     public string? PublicId { get; set; }
     //Navigation properties
     public int AppUserId { get; set; }
-
+    [JsonIgnore]
     public AppUser AppUser { get; set; } = null!;
 
 }

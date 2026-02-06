@@ -49,7 +49,6 @@ export class MembersService {
       });
   }
 
-
   getMemberByUsername(username: string) {
     const member: Member = [...this.memberCache.values()]
       .reduce((arr, elem) => arr.concat(elem.body), [])
@@ -60,7 +59,7 @@ export class MembersService {
   }
 
   updateMember(member: Member) {
-    //Whem updating member, also update members array
+    //When updating member, also update members array
     return this.http
       .put(this.apiUrl + 'users', member)
       .pipe

@@ -24,10 +24,10 @@ export class ConfirmService {
         btnCancelText
       }
     };
-    this.bsModalRef = this.modalService.show(ConfirmDialogComponent, config);
+    this.bsModalRef = this.modalService.show(ConfirmDialogComponent);
     return this.bsModalRef.onHidden?.pipe(
       map(() => {
-        if (this.bsModalRef?.content) {
+        if (this.bsModalRef?.content) {config
           return this.bsModalRef.content.result;
         } else return false;
       })
