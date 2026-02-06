@@ -1,6 +1,9 @@
 # 💘 Dating App
 
+## 📖 Overview
 A web-based dating platform that enables users to create profiles, discover potential matches, communicate securely, and access personalized features through authenticated user accounts.
+
+---
 
 ## 🚀 Features
 
@@ -10,6 +13,8 @@ A web-based dating platform that enables users to create profiles, discover pote
 - Real-time messaging between matched users
 - Role-based access control for admins and users
 - Responsive UI with smooth navigation
+  
+---
 
 ## 🧰 Tech Stack
 
@@ -18,6 +23,8 @@ A web-based dating platform that enables users to create profiles, discover pote
 - Entity Framework Core
 - JWT Authentication
 - SQL Lite
+
+---
 
 **Frontend:**
 - Angular
